@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<!-- saved from url=(0046)http://www.ensiie.fr/~pons/IDE/ballCANVAS.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <script type="text/javascript">
+      // Global variables.
+	  var ballRadius = 30;
+      var ballX = 150; // Ball x position.
+      var ballY = 150; // Ball y position.
+      var ballDX = 2; // Change in ball x position.
+      var ballDY = 4; // Change in ball y position.
+      var boardX = 300; // Board width.
+      var boardY = 300; // Board height.
+      var paddleX = 150; // Initial paddle location.
+      var paddleH = 10; // Paddle height.
+      var paddleD = boardY - paddleH; // Paddle depth.
+      var paddleW = 150; // Paddle width.
+      var canvas; // Canvas element.
+      var ctx; // Canvas context.
+      //var gameLoop; // Game loop time interval.
+      // This function is called on page load.
+
+
+      function drawGameCanvas() {
+	  //OR YOU CAN USE THIS LINE drawGameCanvas = function(){
+
+        // Get the canvas element.
+        canvas = document.getElementById("gameBoard");
+		
+		//Hide the mouse cursor
+		canvas.style.cursor = "none";
+
+        // Make sure you got it.
+        if (canvas.getContext) {
+          // Specify 2d canvas type.
+          ctx = canvas.getContext("2d");
+//-----------------------------------------------------------------------------
+// PLAY THE GAME UNTIL THE BALL STOPS.
+          //gameLoop = setInterval(drawBall, 16);
+		  
+		// shim layer with setTimeout fallback
+		window.requestAnimFrame =  window.requestAnimationFrame       ||
+				  window.webkitRequestAnimationFrame ||
+				  window.mozRequestAnimationFrame    ||
+				  function( callback ){
+					window.setTimeout(callback, 1000 / 60); //max FPS is 60
+				  };
+		
+		(function animloop()
+		{
+			if (drawBall())
+			{
+				requestAnimFrame(animloop);
+			}
+		})();
+//-----------------------------------------------------------------------------
+
+          // Add mouse listener.
+		canvas.addEventListener('mousemove', 
+								function(evt) {
+									var mousePos = getMousePos(canvas, evt);
+									movePaddle(mousePos.x);}, 
+								false);
+								
+		// Add keyboard listener.
+        //window.addEventListener('keydown', whatKey, true);
+        }
+      }
+
+      function drawBall() {
+
+        // Clear the board.
+        ctx.clearRect(0, 0, boardX, boardY);
+
+        // Fill the board.
+        ctx.fillStyle = "rgb(255,200,220)";
+        ctx.beginPath();
+        ctx.rect(0, 0, boardX, boardY);
+        ctx.closePath();
+        ctx.fill();
+
+        // Draw a ball.
+        ctx.fillStyle = "tomato";
+        ctx.beginPath();
+        ctx.arc(ballX, ballY, ballRadius, 0, Math.PI * 2, true);
+        ctx.closePath();
+        ctx.fill();
+
+        // Draw the paddle.
+        ctx.fillStyle = "navy";
+        ctx.beginPath();
+        ctx.rect(paddleX, paddleD, paddleW, paddleH);
+        ctx.closePath();
+        ctx.fill();
+
+        // Change the ball location.
+        ballX += ballDX;
+        ballY += ballDY;
+
+        // Bounce on a left or right edge.
+        if (ballX + ballDX > boardX - ballRadius || ballX + ballDX < ballRadius) {ballDX = -ballDX;}
+
+        // If ball hits the top, bounce it. 
+        if (ballY + ballDY < ballRadius) ballDY = -ballDY;
+        // If the ball hits the bottom, check see if it hits a paddle.
+        else if (ballY + ballDY > boardY - ballRadius) {
+          // If the ball hits the paddle, bounce it.
+          if (ballX > paddleX && ballX < paddleX + paddleW) ballDY = -ballDY;
+          // Otherwise the game is over.
+          else {
+            //clearInterval(gameLoop);
+            //alert("Game over!");
+			  ctx.fillStyle = "rgb(140,140,255)";
+			  ctx.font = "bold 16px Arial";
+			  ctx.textAlign = 'center';
+			  ctx.fillText("Game over!", boardX/2, boardY/2);
+			  return false;
+          }
+        }
+		
+		return true;
+      }
+
+	function movePaddle(mouseX) {
+        if(mouseX < 0)
+			mouseX = 0;
+		if(mouseX > boardX - paddleW)
+			mouseX = boardX - paddleW;
+		
+		paddleX = mouseX;
+      }
+    function getMousePos(canvas, evt) {
+        var rect = canvas.getBoundingClientRect();
+        return {
+          x: evt.clientX - rect.left,
+          y: evt.clientY - rect.top
+        };
+      }
+	  
+
+	
+      /*function whatKey(evt) {
+
+        switch (evt.keyCode) {
+          // Left arrow.
+        case 37:
+          paddleX = paddleX - 20;
+          if (paddleX < 0) paddleX = 0;
+          break;
+
+          // Right arrow.
+        case 39:
+          paddleX = paddleX + 20;
+          if (paddleX > boardX - paddleW) paddleX = boardX - paddleW;
+          break;
+        }
+      }*/
+    </script>
+  </head>
+  
+  <body onload="drawGameCanvas()">
+    <h1>
+      Canvas Racquetball
+    </h1>
+    <div>
+      <canvas id="gameBoard" width="300" height="300">
+      </canvas>
+    </div>
+  
+
+
+
+</body></html>
