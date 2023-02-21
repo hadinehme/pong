@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Set SSH information</title>
+    <link rel="stylesheet" href="index.css">
+  </head>
+  <body>
+    <form id="ssh-form">
+      <p>
+        <label for="username">Enter your remote <b>Username</b> :</label>
+        <input type="input" id="username" placeholder="hnehme">
+      </p>
+      <p>
+        <label for="keyFile">Select <b>Private SSH key</b> :</label>
+        <input type="file" id="keyFile">
+      </p>
+      <p>
+        <label for="passphrase">Enter SSH key <b>Passphrase</b> :</label>
+        <input type="password" id="passphrase">
+      </p>
+      <p>
+        <button onclick="saveSshData()">Submit</button>
+      </p>
+      <p id="serverMessage"></p>
+    </form>
+
+    <script src="index.js"></script>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+button {
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+input::file-selector-button {
+    color: black;
+    border: thin solid black;
+    background-color: white;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+input {
+    position: absolute;
+    left: 50%;
+}
+
+body {
+    background-color: rgb(252, 252, 95);
+    font-family: Arial, Helvetica, sans-serif;
+}

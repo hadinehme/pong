@@ -45,6 +45,16 @@ function parsePhpRequestParameters() {
     return parsedParams;
 }
 
-function loadFunction(name) {
-    return eval(pm.variables.get(name));
-};
+//This will lead to a DateHelper Class
+function timeConverter(timestamp){
+    let a = new Date(timestamp);
+    let year = a.getFullYear();
+    let month = (a.getMonth()+1).toString().padStart(2, '0');
+    let date = a.getDate().toString().padStart(2, '0');
+    let hour = a.getHours().toString().padStart(2, '0');
+    let min = a.getMinutes().toString().padStart(2, '0');
+    let sec = a.getSeconds().toString().padStart(2, '0');
+    let time = date + '/' + month + '/' + year + ' ' + hour + ':' + min + ':' + sec ;
+    
+    return time;
+}
