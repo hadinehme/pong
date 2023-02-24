@@ -45,6 +45,22 @@ function parsePhpRequestParameters() {
     return parsedParams;
 }
 
+function getDecodedEmbeddedRedirectionHtml(postmanResponse) {
+    let base64EncodedHtml = postmanResponse.json().REDIRECTHTML;
+    
+    return atob(base64EncodedHtml);
+}
+
+function parseRedirectionHtml(html) {
+    const cheerioHtml = cheerio(html);
+    const formData = {};
+    cheerioHtml.find("form input").each((index, item) => {
+        formData[item.attribs.name] = item.attribs.value;
+    });
+    
+    return formData;
+}
+
 //This will lead to a DateHelper Class
 function timeConverter(timestamp){
     let a = new Date(timestamp);

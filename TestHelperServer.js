@@ -128,7 +128,7 @@ function getSshConfiguration(sshKeyFilePath, passphrase, username, host) {
         host: host,
         username: username,
         privateKey: fs.readFileSync(sshKeyFilePath),
-        passphrase: passphrase,
+        passphrase: passphrase
     };
 }
 
