@@ -98,6 +98,12 @@ function sendOkResponse(response, message) {
     response.end();
 }
 
+function sendKoResponse(response, message) {
+    response.writeHead(500, { 'Content-Type': 'text/html' });
+    response.write(message);
+    response.end();
+}
+
 function executeCommand(/*String*/ command, /*String*/ input, response) {
     let executionCode = 0;
 
@@ -118,6 +124,8 @@ function executeCommand(/*String*/ command, /*String*/ input, response) {
         console.error(`Error executing command: ${error.message}`);
         console.error(`Command error output: ${error.stderr}`);
         console.error(`Command standard output: ${error.stdout}`);
+
+        sendKoResponse(response, error.message);
     }
 
     return executionCode;
@@ -155,8 +163,9 @@ function sshConnectAndExecute(sshConfiguration, command, response) {
         });
     });
 
-    ssh.on('error', function(err) {
-        console.error('SSH connection error:', err);
+    ssh.on('error', function(error) {
+        console.error('SSH connection error:', error);
+        sendKoResponse(response, error.message);
         ssh.end();
     });
 
@@ -171,9 +180,10 @@ function sshConnectAndExecute(sshConfiguration, command, response) {
 function secureUpload(scpConfiguration, sourcePath, destinationPath, response) {
     const scp = new scpClient(scpConfiguration);
 
-    scp.upload(sourcePath, destinationPath, function(err) {
-        if (err) {
-            console.log('Error uploading file:', err);
+    scp.upload(sourcePath, destinationPath, function(error) {
+        if (error) {
+            console.log('Error uploading file:', error);
+            sendKoResponse(response, error.message);
         } 
         else {
             console.log('File uploaded successfully');
@@ -187,9 +197,10 @@ function secureUpload(scpConfiguration, sourcePath, destinationPath, response) {
 function secureDownload(scpConfiguration, sourcePath, destinationPath, response) {
     const scp = new scpClient(scpConfiguration);
 
-    scp.download(sourcePath, destinationPath, function(err) {
-        if (err) {
-            console.log('Error downloading file:', err);
+    scp.download(sourcePath, destinationPath, function(error) {
+        if (error) {
+            console.log('Error downloading file:', error);
+            sendKoResponse(response, error.message);
         } 
         else {
             console.log('File downloaded successfully');

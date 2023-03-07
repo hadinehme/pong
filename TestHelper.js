@@ -45,10 +45,12 @@ function parsePhpRequestParameters() {
     return parsedParams;
 }
 
-function getDecodedEmbeddedRedirectionHtml(postmanResponse) {
-    let base64EncodedHtml = postmanResponse.json().REDIRECTHTML;
-    
-    return atob(base64EncodedHtml);
+function getDecodedString_Base64(encodedString) {
+    return CryptoJS.enc.Base64.parse(encodedString).toString(CryptoJS.enc.Utf8);
+}
+
+function getDeepCopyOfJsonObject(jsonObject) {
+    return JSON.parse(JSON.stringify(jsonObject));
 }
 
 function parseRedirectionHtml(html) {
@@ -73,4 +75,74 @@ function timeConverter(timestamp){
     let time = date + '/' + month + '/' + year + ' ' + hour + ':' + min + ':' + sec ;
     
     return time;
+}
+
+function getDuplicateOfCurrentRequest() {
+    const method  = pm.request.method;
+    const url   = pm.request.url.toString();
+
+    const body = {};
+    body['mode'] = pm.request.body.mode;
+    body[pm.request.body.mode] = getDeepCopyOfJsonObject(pm.request.body[pm.request.body.mode]);
+
+    const duplicateRequest = {
+        method,
+        header: {
+            'Content-Type': getCurrentRequestContentType()
+        },
+        url,
+        body
+    };
+
+    return duplicateRequest;
+}
+
+function getCurrentRequestContentType() {
+    let requestContentType = '';
+    const requestBodyMode = pm.request.body.mode;
+
+    switch (requestBodyMode) {
+        case 'raw':
+            const requestBodyFormat = pm.request.body[requestBodyMode]
+            if (requestBodyFormat) {
+                if (requestBodyFormat.startsWith('{')) {
+                    requestContentType = 'application/json';
+                } else if (requestBodyFormat.startsWith('<')) {
+                    requestContentType = 'application/xml';
+                }
+                else {
+                    requestContentType = 'text/plain';
+                }
+            }
+            break;
+        case 'formdata':
+            requestContentType = 'multipart/form-data';
+            break;
+        case 'urlencoded':
+            requestContentType = 'application/x-www-form-urlencoded';
+            break;
+        default:
+            console.log('Unknown request body mode:', requestBodyMode);
+    }
+
+    return requestContentType;
+}
+
+function sendRequest(request) {
+    return new Promise((resolve, reject) => {   
+        try {
+            pm.sendRequest(request, (error, response) => {
+                if (!error) {
+                    let promiseResponse = response.headers.get('Content-Type').startsWith('application/json') ?
+                        response.json() : response.text();
+
+                    resolve(promiseResponse);
+                } else {
+                    console.warn('Error executing request', error);
+                }
+            });
+        } catch (error) {
+            console.warn('Error executing request', error);
+        }
+    })
 }
