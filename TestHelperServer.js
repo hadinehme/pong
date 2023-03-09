@@ -32,8 +32,9 @@ ipcMain.on('sshData', (event, sshData) => {
   });
 
 function startServer(username, sshKeyFilePath, passphrase) {
-    var http = require('http'); // Import Node.js core module
+    var http = require('http');
     const querystring = require('querystring');
+    const url = require('url');
 
     var server = http.createServer(function (request, response) {   //create web server
         let requestBody = '';
@@ -46,48 +47,74 @@ function startServer(username, sshKeyFilePath, passphrase) {
         request.on('end', () => {
             formData = querystring.parse(requestBody);
 
-            if (Object.keys(formData).length === 0) {
-                response.writeHead(400, { 'Content-Type': 'text/plain' });
-                response.end('The request body parameters are empty, request cannot be processed.');
+            if (request.method === "POST") {
+                if (Object.keys(formData).length === 0) {
+                    answerWithBadRequest(response, 'The POST request body parameters are empty, request cannot be processed.');
+                }
+                else {
+                    if (request.url == "/sshConnectAndExecute") {
+                        const sshConfig = getSshConfiguration(sshKeyFilePath, passphrase, username, formData.host);
+                        sshConnectAndExecute(sshConfig, formData.command, response);
+                    }
+                    else if (request.url == "/secureCopyToRemote") {
+                        const scpConfig = getSshConfiguration(sshKeyFilePath, passphrase, username, formData.host);
+                        let sourcePath = `downloads/${formData.filename}`
+                        let destinationPath = formData.destinationPath;
+        
+                        secureUpload(scpConfig, sourcePath, destinationPath, response);
+                    }
+                    else if (request.url == "/secureCopyFromRemote") {
+                        const scpConfig = getSshConfiguration(sshKeyFilePath, passphrase, username, formData.host);
+                        
+                        let sourcePath = `${formData.sourcePath}/${formData.filename}`;
+                        let destinationPath = `downloads/${formData.filename}`
+        
+                        secureDownload(scpConfig, sourcePath, destinationPath, response);
+                    }
+                    else if (request.url == "/saveAsFile") {
+                        fs.writeFile(`downloads/${formData.filename}`, formData.content, function (err) {
+                            if (err) throw err;
+                            console.log('File is created successfully.');
+                            sendOkResponse(response, `The file '${formData.filename}' was created successfully.`)
+                          });
+                    }
+                    else if (request.url == "/executeCommand") {
+                        executeCommand(formData.command, formData.input, response);
+                    }
+                    else {
+                        answerWithBadRequest('Invalid POST request type');
+                    }
+                }
             }
-            else if (request.method === "POST" && request.url == "/sshConnectAndExecute") {
-                const sshConfig = getSshConfiguration(sshKeyFilePath, passphrase, username, formData.host);
-                sshConnectAndExecute(sshConfig, formData.command, response);
-      
+            else if (request.method === "GET" && request.url == "/username") {
+                sendOkResponse(response, username)
             }
-            else if (request.method === "POST" && request.url == "/secureCopyToRemote") {
-                const scpConfig = getSshConfiguration(sshKeyFilePath, passphrase, username, formData.host);
-                let sourcePath = `downloads/${formData.filename}`
-                let destinationPath = `/home/${username}`;
+            else if (request.method === "GET") {
+                const parsedUrl = url.parse(request.url, true);
+                const urlPath = parsedUrl.pathname;
+                const queryParamters = parsedUrl.query;
 
-                secureUpload(scpConfig, sourcePath, destinationPath, response);
-            }
-            else if (request.method === "POST" && request.url == "/secureCopyFromRemote") {
-                const scpConfig = getSshConfiguration(sshKeyFilePath, passphrase, username, formData.host);
-                
-                let sourcePath = `/home/${username}/${formData.filename}`;
-                let destinationPath = `downloads/${formData.filename}`
-
-                secureDownload(scpConfig, sourcePath, destinationPath, response);
-            }
-            else if (request.method === "POST" && request.url == "/saveAsFile") {
-                fs.writeFile(`downloads/${formData.filename}`, formData.content, function (err) {
-                    if (err) throw err;
-                    console.log('File is created successfully.');
-                    sendOkResponse(response, `The file '${formData.filename}' was created successfully.`)
-                  });
-            }
-            else if (request.method === "POST" && request.url == "/executeCommand") {
-                executeCommand(formData.command, formData.input, response);
+                if (Object.keys(queryParamters).length === 0) {
+                    answerWithBadRequest(response, 'The GET request query parameters are empty, request cannot be processed.');
+                }
+                else {
+                    if (urlPath == "/fileContent") {
+                        let filePath = `downloads/${queryParamters.filename}`;
+                        let fileContent = fs.readFileSync(filePath);
+                        sendOkResponse(response, fileContent)
+                    }
+                    else {
+                        answerWithBadRequest('Invalid GET request type');
+                    }
+                }
             }
             else {
-                response.writeHead(400, { 'Content-Type': 'text/plain' });
-                response.end('Invalid request type');
+                answerWithBadRequest('Invalid request type');
             }
         });  
     });
 
-    server.listen(5000); //6 - listen for any incoming requests
+    server.listen(5000);
 
     console.log('Node.js web server at port 5000 is running..')
 }
@@ -102,6 +129,11 @@ function sendKoResponse(response, message) {
     response.writeHead(500, { 'Content-Type': 'text/html' });
     response.write(message);
     response.end();
+}
+
+function answerWithBadRequest(response, message) {
+    response.writeHead(400, { 'Content-Type': 'text/plain' });
+    response.end(message);
 }
 
 function executeCommand(/*String*/ command, /*String*/ input, response) {
