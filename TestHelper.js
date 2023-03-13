@@ -146,3 +146,35 @@ function sendRequest(request) {
         }
     })
 }
+
+function buildPhpRequestParameters(object, requestParamatersContainer, requestParameterUnderConstruction = "") {
+    let keys = Object.keys(object);
+
+    keys.forEach(key => {
+        let value = object[key];
+        let requestParamterBase = "";
+
+        if(!requestParameterUnderConstruction) {
+            requestParamterBase = key;
+        }
+        else {
+            requestParamterBase = requestParameterUnderConstruction + '[' + key + ']';
+        }
+
+        if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+            buildPhpRequestParameters(value, requestParamatersContainer, requestParamterBase)
+        }
+        else if(Array.isArray(value)) {
+            value.forEach((arrayElement, index) => {
+                 buildPhpRequestParameters(arrayElement, requestParamatersContainer, requestParamterBase + '[' + index + ']');
+            });
+        }
+        else {
+            if(value === null) {
+                value = "";
+            }
+
+            requestParamatersContainer.push({ key : requestParamterBase, value : value });
+        }
+    });
+}
