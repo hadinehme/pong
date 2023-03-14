@@ -147,7 +147,7 @@ function sendRequest(request) {
     })
 }
 
-function buildPhpRequestParameters(object, requestParamatersContainer, requestParameterUnderConstruction = "") {
+function buildPhpRequestParameters(object, requestParamatersContainer = [], requestParameterUnderConstruction = "") {
     let keys = Object.keys(object);
 
     keys.forEach(key => {
@@ -177,4 +177,6 @@ function buildPhpRequestParameters(object, requestParamatersContainer, requestPa
             requestParamatersContainer.push({ key : requestParamterBase, value : value });
         }
     });
+
+    return requestParamatersContainer;
 }
