@@ -180,3 +180,13 @@ function buildPhpRequestParameters(object, requestParamatersContainer = [], requ
 
     return requestParamatersContainer;
 }
+
+function isJavascriptObject(candidate) {
+    return typeof candidate === 'object' && candidate !== null && !Array.isArray(candidate);
+}
+
+function hexadecimalToText(hexadecimal) {
+    hexadecimal = hexadecimal.replace("0x", '');
+
+    return Buffer.from(hexadecimal, 'hex').toString('utf8');
+}
