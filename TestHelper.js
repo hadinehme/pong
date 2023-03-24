@@ -49,8 +49,8 @@ function getDecodedString_Base64(encodedString) {
     return CryptoJS.enc.Base64.parse(encodedString).toString(CryptoJS.enc.Utf8);
 }
 
-function getDeepCopyOfJsonObject(jsonObject) {
-    return JSON.parse(JSON.stringify(jsonObject));
+function getDeepCopyOfObject(object) {
+    return JSON.parse(JSON.stringify(object));
 }
 
 function parseRedirectionHtml(html) {
