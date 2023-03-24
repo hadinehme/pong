@@ -83,7 +83,7 @@ function getDuplicateOfCurrentRequest() {
 
     const body = {};
     body['mode'] = pm.request.body.mode;
-    body[pm.request.body.mode] = getDeepCopyOfJsonObject(pm.request.body[pm.request.body.mode]);
+    body[pm.request.body.mode] = getDeepCopyOfObject(pm.request.body[pm.request.body.mode]);
 
     const duplicateRequest = {
         method,
