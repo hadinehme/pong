@@ -161,7 +161,7 @@ function buildPhpRequestParameters(object, requestParamatersContainer = [], requ
             requestParamterBase = requestParameterUnderConstruction + '[' + key + ']';
         }
 
-        if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+        if (isJavascriptObject(value)) {
             buildPhpRequestParameters(value, requestParamatersContainer, requestParamterBase)
         }
         else if(Array.isArray(value)) {
