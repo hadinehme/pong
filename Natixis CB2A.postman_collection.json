@@ -1,0 +1,5522 @@
+{
+	"info": {
+		"_postman_id": "3504eada-97b5-45b1-a98a-a9cdfa364e8e",
+		"name": "Natixis CB2A",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26484900"
+	},
+	"item": [
+		{
+			"name": "Get Local VPN IP address",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"The username used for the Remote machine connections is retrieved\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    pm.collectionVariables.set('localVpnIp', pm.response.text());\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/vpnIp",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"vpnIp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crypto-Get UDV data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"let data_ = pm.response.json().DATA;\r",
+							"\r",
+							"pm.collectionVariables.set(\"udvIdentifier\", data_.setup.identifier);\r",
+							"pm.collectionVariables.set(\"merchantId\", data_.mid.idMid);\r",
+							"pm.collectionVariables.set(\"accountContractNumber\", data_.generalInformation.accContractNumber);\r",
+							"pm.collectionVariables.set(\"merchantCategoryCode\", data_.mid.merchantCategoryCode);\r",
+							"pm.collectionVariables.set(\"siret\",data_.generalInformation.siret);\r",
+							"pm.collectionVariables.set(\"currency\",data_.generalInformation.idProcessingCurrency);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "method",
+							"value": "getAllUdvData",
+							"type": "text"
+						},
+						{
+							"key": "params[0][id]",
+							"value": "500296",
+							"type": "text"
+						},
+						{
+							"key": "params[1][USERID]",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "params[1][USERNAME]",
+							"value": "be2bill-god1",
+							"type": "text"
+						},
+						{
+							"key": "params[1][USERSTATUS]",
+							"value": "active",
+							"type": "text"
+						},
+						{
+							"key": "params[1][INTERNALVERSION]",
+							"value": "1.2.0",
+							"type": "text"
+						},
+						{
+							"key": "params[1][INVOKER]",
+							"value": "intranet",
+							"type": "text"
+						},
+						{
+							"key": "params[1][IDLOG]",
+							"value": "63ff806fb6da62.95625603",
+							"type": "text"
+						},
+						{
+							"key": "params[1][USERIP]",
+							"value": "10.67.94.46",
+							"type": "text"
+						},
+						{
+							"key": "params[2][__t]",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "formatOutput",
+							"value": "json",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BACK}}/backoffice-service/service/rest/udvs.php",
+					"host": [
+						"{{BACK}}"
+					],
+					"path": [
+						"backoffice-service",
+						"service",
+						"rest",
+						"udvs.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crypto-Get MID data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"let data_ = pm.response.json().DATA;\r",
+							"\r",
+							"pm.collectionVariables.set(\"threeDSecureDescriptor\", data_.threeDSecureDescriptor);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "method",
+							"value": "getMid",
+							"type": "text"
+						},
+						{
+							"key": "params[0][MIDID]",
+							"value": "{{merchantId}}",
+							"type": "text"
+						},
+						{
+							"key": "params[1][USERID]",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "params[1][USERNAME]",
+							"value": "be2bill-god1",
+							"type": "text"
+						},
+						{
+							"key": "params[1][USERSTATUS]",
+							"value": "active",
+							"type": "text"
+						},
+						{
+							"key": "params[1][INTERNALVERSION]",
+							"value": "1.2.0",
+							"type": "text"
+						},
+						{
+							"key": "params[1][INVOKER]",
+							"value": "intranet",
+							"type": "text"
+						},
+						{
+							"key": "params[1][IDLOG]",
+							"value": "63ff806fb6da62.95625603",
+							"type": "text"
+						},
+						{
+							"key": "params[1][USERIP]",
+							"value": "10.67.94.46",
+							"type": "text"
+						},
+						{
+							"key": "params[2][__t]",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "formatOutput",
+							"value": "json",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BACK}}/backoffice-service/service/rest/mids.php",
+					"host": [
+						"{{BACK}}"
+					],
+					"path": [
+						"backoffice-service",
+						"service",
+						"rest",
+						"mids.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crypto-Get Secret",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set(\"secret\", pm.response.text().slice(1, -1));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "parameters[IDENTIFIER]",
+							"value": "{{udvIdentifier}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{TOOLKIT}}/transaction/generator/ajax-get-password",
+					"host": [
+						"{{TOOLKIT}}"
+					],
+					"path": [
+						"transaction",
+						"generator",
+						"ajax-get-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1.1-Crypto - Payment with 3DS - Visa",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"eval(pm.collectionVariables.get(\"TestHelper\"));\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Transaction requires 3D secure authentication\", function () {\r",
+							"    pm.expect(pm.response.json().EXECCODE).to.eql(\"0001\");\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set('publicTransactionId', pm.response.json().TRANSACTIONID);\r",
+							"\r",
+							"let base64EncodedHtml = pm.response.json().REDIRECTHTML;\r",
+							"let decodedRedirectionHtml = getDecodedString_Base64(base64EncodedHtml)\r",
+							"const redirectionParameters = parseRedirectionHtml(decodedRedirectionHtml);\r",
+							"\r",
+							"pm.test(\"The redirection public Transaction ID is correct\", function () {\r",
+							"    pm.expect(redirectionParameters.transaction_public_id).to.eql(pm.collectionVariables.get('publicTransactionId'));\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set(\"redirectionTransactionId\", redirectionParameters.transaction_id);\r",
+							"pm.collectionVariables.set(\"redirectionCardNetwork\", redirectionParameters.card_network);\r",
+							"pm.collectionVariables.set(\"redirectionMethodUrl\", redirectionParameters.method_url);\r",
+							"pm.collectionVariables.set(\"redirectionMethodData\", redirectionParameters.method_data);\r",
+							"pm.collectionVariables.set(\"redirectionTarget\", redirectionParameters.target);\r",
+							"\r",
+							"pm.collectionVariables.set(\"nextRequest\", \"1.2-Crypto - Payment with CardOnFile Creation OneClick - Visa\");\r",
+							"postman.setNextRequest(\"Send preprare authenticate\");\r",
+							"\r",
+							"console.log(\"Waiting for 5 seconds before next request.\");\r",
+							"setTimeout(() => {console.log(\"Waiting done.\");}, 5 * 1000);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"eval(pm.collectionVariables.get(\"TestHelper\"));\r",
+							"\r",
+							"pm.collectionVariables.set('hash', computeHashValue(pm.collectionVariables.get('secret')));\r",
+							"\r",
+							"pm.collectionVariables.set(\"selectedBrand\", pm.request.body[pm.request.body.mode].get(\"params[SELECTEDBRAND]\"));\r",
+							"pm.collectionVariables.set(\"cardCode\", pm.request.body[pm.request.body.mode].get(\"params[CARDCODE]\"));\r",
+							"pm.collectionVariables.set(\"cardCvv\", pm.request.body[pm.request.body.mode].get(\"params[CARDCVV]\"));\r",
+							"pm.collectionVariables.set(\"cardValidityDate\", pm.request.body[pm.request.body.mode].get(\"params[CARDVALIDITYDATE]\"));\r",
+							"pm.collectionVariables.set(\"clientIP\", pm.collectionVariables.replaceIn(pm.request.body[pm.request.body.mode].get(\"params[CLIENTIP]\")));\r",
+							"\r",
+							"let tagsList = [\"CRYPTO\"];\r",
+							"\r",
+							"let threeDSSecurePreference = pm.request.body[pm.request.body.mode].get(\"params[3DSECUREPREFERENCE]\");\r",
+							"if(threeDSSecurePreference) {\r",
+							"    pm.collectionVariables.set(\"threeDSecurePreference\", threeDSSecurePreference);\r",
+							"    tagsList.push(\"INTERNAL_MPI\");\r",
+							"    tagsList.push(\"3DS\");\r",
+							"}\r",
+							"\r",
+							"let threeDSecureMode = pm.request.body[pm.request.body.mode].get(\"params[3DSECUREMODE]\");\r",
+							"if(threeDSecureMode) {\r",
+							"    pm.collectionVariables.set(\"threeDSecureMode\", threeDSecureMode);\r",
+							"    tagsList.push(\"EXTERNAL_MPI\");\r",
+							"    tagsList.push(\"3DS\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[CREATEALIAS]\") && pm.request.body[pm.request.body.mode].get(\"params[CREATEALIAS]\").toLowerCase() === \"yes\") {\r",
+							"    tagsList.push(\"CARD_ON_FILE_CREATION\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[ALIAS]\")) {\r",
+							"    tagsList.push(\"CARD_ON_FILE_USE\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[ALIASMODE]\") && pm.request.body[pm.request.body.mode].get(\"params[ALIASMODE]\").toLowerCase() === \"subscription\") {\r",
+							"    tagsList.push(\"SUBSCRIPTION\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[ALIASMODE]\") && pm.request.body[pm.request.body.mode].get(\"params[ALIASMODE]\").toLowerCase() === \"oneclick\") {\r",
+							"    tagsList.push(\"ONECLICK\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[3DSECUREOUTOFSCOPEREASON]\") && pm.request.body[pm.request.body.mode].get(\"params[3DSECUREOUTOFSCOPEREASON]\").toLowerCase() === \"moto\") {\r",
+							"    tagsList.push(\"MOTO\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[SUBMERCHANTEXTERNALID]\")) {\r",
+							"    tagsList.push(\"PAYFAC\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[XPAYSOLUTION]\")) {\r",
+							"    tagsList.push(\"XPAY\");\r",
+							"    \r",
+							"    if(pm.request.body[pm.request.body.mode].get(\"params[XPAYSOLUTION]\").toLowerCase() === \"apple\") {\r",
+							"        tagsList.push(\"APPLE\");\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[AMOUNT]\") && parseInt(pm.request.body[pm.request.body.mode].get(\"params[AMOUNT]\")) <= 3000) {\r",
+							"    tagsList.push(\"SMALL_AMOUNT\");\r",
+							"}\r",
+							"\r",
+							"pm.collectionVariables.set(\"tags\", JSON.stringify(tagsList));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "method",
+							"value": "payment",
+							"type": "text"
+						},
+						{
+							"key": "params[IDENTIFIER]",
+							"value": "{{udvIdentifier}}",
+							"type": "text"
+						},
+						{
+							"key": "params[OPERATIONTYPE]",
+							"value": "payment",
+							"type": "text"
+						},
+						{
+							"key": "params[AMOUNT]",
+							"value": "7500",
+							"type": "text"
+						},
+						{
+							"key": "params[VERSION]",
+							"value": "3.0",
+							"type": "text"
+						},
+						{
+							"key": "params[CARDCODE]",
+							"value": "4976074999900019",
+							"type": "text"
+						},
+						{
+							"key": "params[CARDCVV]",
+							"value": "123",
+							"type": "text"
+						},
+						{
+							"key": "params[CARDVALIDITYDATE]",
+							"value": "12-24",
+							"type": "text"
+						},
+						{
+							"key": "params[CARDFULLNAME]",
+							"value": "John Doe",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTIDENT]",
+							"value": "John.doe42",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTEMAIL]",
+							"value": "hadi.doe@isp.com",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTREFERRER]",
+							"value": "http://site.com/cart.php",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTUSERAGENT]",
+							"value": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:56.0) Gecko/20100101 Firefox/56.0",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTIP]",
+							"value": "{{localVpnIp}}",
+							"type": "text"
+						},
+						{
+							"key": "params[ORDERID]",
+							"value": "5abe3c85547b8",
+							"type": "text"
+						},
+						{
+							"key": "params[DESCRIPTION]",
+							"value": "Achat de matériel informatique",
+							"type": "text"
+						},
+						{
+							"key": "params[HASH]",
+							"value": "{{hash}}",
+							"type": "text"
+						},
+						{
+							"key": "params[SELECTEDBRAND]",
+							"value": "visa",
+							"type": "text"
+						},
+						{
+							"key": "params[3DSECUREPREFERENCE]",
+							"value": "SCA",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{FRONT}}/service/rest/process.php",
+					"host": [
+						"{{FRONT}}"
+					],
+					"path": [
+						"service",
+						"rest",
+						"process.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1.2-Crypto - Payment with CardOnFile Creation OneClick - Visa",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"eval(pm.collectionVariables.get(\"TestHelper\"));\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Transaction requires 3D secure authentication\", function () {\r",
+							"    pm.expect(pm.response.json().EXECCODE).to.eql(\"0001\");\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set('publicTransactionId', pm.response.json().TRANSACTIONID);\r",
+							"\r",
+							"let base64EncodedHtml = pm.response.json().REDIRECTHTML;\r",
+							"let decodedRedirectionHtml = getDecodedString_Base64(base64EncodedHtml)\r",
+							"const redirectionParameters = parseRedirectionHtml(decodedRedirectionHtml);\r",
+							"\r",
+							"pm.test(\"The redirection public Transaction ID is correct\", function () {\r",
+							"    pm.expect(redirectionParameters.transaction_public_id).to.eql(pm.collectionVariables.get('publicTransactionId'));\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set(\"redirectionTransactionId\", redirectionParameters.transaction_id);\r",
+							"pm.collectionVariables.set(\"redirectionCardNetwork\", redirectionParameters.card_network);\r",
+							"pm.collectionVariables.set(\"redirectionMethodUrl\", redirectionParameters.method_url);\r",
+							"pm.collectionVariables.set(\"redirectionMethodData\", redirectionParameters.method_data);\r",
+							"pm.collectionVariables.set(\"redirectionTarget\", redirectionParameters.target);\r",
+							"\r",
+							"pm.collectionVariables.set(\"nextRequest\", \"1.3-Crypto - Payment via CardOnFile Use OneClick- Visa\");\r",
+							"postman.setNextRequest(\"Send preprare authenticate\");\r",
+							"\r",
+							"console.log(\"Waiting for 5 seconds before next request.\");\r",
+							"setTimeout(() => {console.log(\"Waiting done.\");}, 5 * 1000);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"eval(pm.collectionVariables.get(\"TestHelper\"));\r",
+							"\r",
+							"pm.collectionVariables.set('hash', computeHashValue(pm.collectionVariables.get('secret')));\r",
+							"\r",
+							"pm.collectionVariables.set(\"selectedBrand\", pm.request.body[pm.request.body.mode].get(\"params[SELECTEDBRAND]\"));\r",
+							"pm.collectionVariables.set(\"cardCode\", pm.request.body[pm.request.body.mode].get(\"params[CARDCODE]\"));\r",
+							"pm.collectionVariables.set(\"cardCvv\", pm.request.body[pm.request.body.mode].get(\"params[CARDCVV]\"));\r",
+							"pm.collectionVariables.set(\"cardValidityDate\", pm.request.body[pm.request.body.mode].get(\"params[CARDVALIDITYDATE]\"));\r",
+							"pm.collectionVariables.set(\"clientIP\", pm.collectionVariables.replaceIn(pm.request.body[pm.request.body.mode].get(\"params[CLIENTIP]\")));\r",
+							"\r",
+							"let tagsList = [\"CRYPTO\"];\r",
+							"\r",
+							"let threeDSSecurePreference = pm.request.body[pm.request.body.mode].get(\"params[3DSECUREPREFERENCE]\");\r",
+							"if(threeDSSecurePreference) {\r",
+							"    pm.collectionVariables.set(\"threeDSecurePreference\", threeDSSecurePreference);\r",
+							"    tagsList.push(\"INTERNAL_MPI\");\r",
+							"    tagsList.push(\"3DS\");\r",
+							"}\r",
+							"\r",
+							"let threeDSecureMode = pm.request.body[pm.request.body.mode].get(\"params[3DSECUREMODE]\");\r",
+							"if(threeDSecureMode) {\r",
+							"    pm.collectionVariables.set(\"threeDSecureMode\", threeDSecureMode);\r",
+							"    tagsList.push(\"EXTERNAL_MPI\");\r",
+							"    tagsList.push(\"3DS\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[CREATEALIAS]\") && pm.request.body[pm.request.body.mode].get(\"params[CREATEALIAS]\").toLowerCase() === \"yes\") {\r",
+							"    tagsList.push(\"CARD_ON_FILE_CREATION\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[ALIAS]\")) {\r",
+							"    tagsList.push(\"CARD_ON_FILE_USE\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[ALIASMODE]\") && pm.request.body[pm.request.body.mode].get(\"params[ALIASMODE]\").toLowerCase() === \"subscription\") {\r",
+							"    tagsList.push(\"SUBSCRIPTION\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[ALIASMODE]\") && pm.request.body[pm.request.body.mode].get(\"params[ALIASMODE]\").toLowerCase() === \"oneclick\") {\r",
+							"    tagsList.push(\"ONECLICK\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[3DSECUREOUTOFSCOPEREASON]\") && pm.request.body[pm.request.body.mode].get(\"params[3DSECUREOUTOFSCOPEREASON]\").toLowerCase() === \"moto\") {\r",
+							"    tagsList.push(\"MOTO\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[SUBMERCHANTEXTERNALID]\")) {\r",
+							"    tagsList.push(\"PAYFAC\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[XPAYSOLUTION]\")) {\r",
+							"    tagsList.push(\"XPAY\");\r",
+							"    \r",
+							"    if(pm.request.body[pm.request.body.mode].get(\"params[XPAYSOLUTION]\").toLowerCase() === \"apple\") {\r",
+							"        tagsList.push(\"APPLE\");\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[AMOUNT]\") && parseInt(pm.request.body[pm.request.body.mode].get(\"params[AMOUNT]\")) <= 3000) {\r",
+							"    tagsList.push(\"SMALL_AMOUNT\");\r",
+							"}\r",
+							"\r",
+							"pm.collectionVariables.set(\"tags\", JSON.stringify(tagsList));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "method",
+							"value": "payment",
+							"type": "text"
+						},
+						{
+							"key": "params[IDENTIFIER]",
+							"value": "{{udvIdentifier}}",
+							"type": "text"
+						},
+						{
+							"key": "params[OPERATIONTYPE]",
+							"value": "payment",
+							"type": "text"
+						},
+						{
+							"key": "params[AMOUNT]",
+							"value": "7500",
+							"type": "text"
+						},
+						{
+							"key": "params[VERSION]",
+							"value": "3.0",
+							"type": "text"
+						},
+						{
+							"key": "params[CARDCODE]",
+							"value": "4976074999900019",
+							"type": "text"
+						},
+						{
+							"key": "params[CARDCVV]",
+							"value": "123",
+							"type": "text"
+						},
+						{
+							"key": "params[CARDVALIDITYDATE]",
+							"value": "12-24",
+							"type": "text"
+						},
+						{
+							"key": "params[CARDFULLNAME]",
+							"value": "John Doe",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTIDENT]",
+							"value": "John.doe42",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTEMAIL]",
+							"value": "hadi.doe@isp.com",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTREFERRER]",
+							"value": "http://site.com/cart.php",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTUSERAGENT]",
+							"value": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:56.0) Gecko/20100101 Firefox/56.0",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTIP]",
+							"value": "{{localVpnIp}}",
+							"type": "text"
+						},
+						{
+							"key": "params[ORDERID]",
+							"value": "5abe3c85547b8",
+							"type": "text"
+						},
+						{
+							"key": "params[DESCRIPTION]",
+							"value": "Achat de matériel informatique",
+							"type": "text"
+						},
+						{
+							"key": "params[HASH]",
+							"value": "{{hash}}",
+							"type": "text"
+						},
+						{
+							"key": "params[SELECTEDBRAND]",
+							"value": "visa",
+							"type": "text"
+						},
+						{
+							"key": "params[3DSECUREPREFERENCE]",
+							"value": "SCAMANDATE",
+							"type": "text"
+						},
+						{
+							"key": "params[CREATEALIAS]",
+							"value": "yes",
+							"type": "text"
+						},
+						{
+							"key": "params[ALIASMODE]",
+							"value": "oneclick",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{FRONT}}/service/rest/process.php",
+					"host": [
+						"{{FRONT}}"
+					],
+					"path": [
+						"service",
+						"rest",
+						"process.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1.3-Crypto - Payment via CardOnFile Use OneClick- Visa",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"eval(pm.collectionVariables.get(\"TestHelper\"));\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Transaction requires 3D secure authentication\", function () {\r",
+							"    pm.expect(pm.response.json().EXECCODE).to.eql(\"0001\");\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set('publicTransactionId', pm.response.json().TRANSACTIONID);\r",
+							"\r",
+							"let base64EncodedHtml = pm.response.json().REDIRECTHTML;\r",
+							"let decodedRedirectionHtml = getDecodedString_Base64(base64EncodedHtml)\r",
+							"const redirectionParameters = parseRedirectionHtml(decodedRedirectionHtml);\r",
+							"\r",
+							"pm.test(\"The redirection public Transaction ID is correct\", function () {\r",
+							"    pm.expect(redirectionParameters.transaction_public_id).to.eql(pm.collectionVariables.get('publicTransactionId'));\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set(\"redirectionTransactionId\", redirectionParameters.transaction_id);\r",
+							"pm.collectionVariables.set(\"redirectionCardNetwork\", redirectionParameters.card_network);\r",
+							"pm.collectionVariables.set(\"redirectionMethodUrl\", redirectionParameters.method_url);\r",
+							"pm.collectionVariables.set(\"redirectionMethodData\", redirectionParameters.method_data);\r",
+							"pm.collectionVariables.set(\"redirectionTarget\", redirectionParameters.target);\r",
+							"\r",
+							"pm.collectionVariables.set(\"nextRequest\", \"PayFac-Get UDV data\");\r",
+							"postman.setNextRequest(\"Send preprare authenticate\");\r",
+							"\r",
+							"console.log(\"Waiting for 5 seconds before next request.\");\r",
+							"setTimeout(() => {console.log(\"Waiting done.\");}, 5 * 1000);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"eval(pm.collectionVariables.get(\"TestHelper\"));\r",
+							"\r",
+							"pm.collectionVariables.set('hash', computeHashValue(pm.collectionVariables.get('secret')));\r",
+							"\r",
+							"pm.collectionVariables.set(\"selectedBrand\", pm.request.body[pm.request.body.mode].get(\"params[SELECTEDBRAND]\"));\r",
+							"pm.collectionVariables.set(\"cardCode\", pm.request.body[pm.request.body.mode].get(\"params[CARDCODE]\"));\r",
+							"pm.collectionVariables.set(\"cardCvv\", pm.request.body[pm.request.body.mode].get(\"params[CARDCVV]\"));\r",
+							"pm.collectionVariables.set(\"cardValidityDate\", pm.request.body[pm.request.body.mode].get(\"params[CARDVALIDITYDATE]\"));\r",
+							"pm.collectionVariables.set(\"clientIP\", pm.collectionVariables.replaceIn(pm.request.body[pm.request.body.mode].get(\"params[CLIENTIP]\")));\r",
+							"\r",
+							"let tagsList = [\"CRYPTO\"];\r",
+							"\r",
+							"let threeDSSecurePreference = pm.request.body[pm.request.body.mode].get(\"params[3DSECUREPREFERENCE]\");\r",
+							"if(threeDSSecurePreference) {\r",
+							"    pm.collectionVariables.set(\"threeDSecurePreference\", threeDSSecurePreference);\r",
+							"    tagsList.push(\"INTERNAL_MPI\");\r",
+							"    tagsList.push(\"3DS\");\r",
+							"}\r",
+							"\r",
+							"let threeDSecureMode = pm.request.body[pm.request.body.mode].get(\"params[3DSECUREMODE]\");\r",
+							"if(threeDSecureMode) {\r",
+							"    pm.collectionVariables.set(\"threeDSecureMode\", threeDSecureMode);\r",
+							"    tagsList.push(\"EXTERNAL_MPI\");\r",
+							"    tagsList.push(\"3DS\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[CREATEALIAS]\") && pm.request.body[pm.request.body.mode].get(\"params[CREATEALIAS]\").toLowerCase() === \"yes\") {\r",
+							"    tagsList.push(\"CARD_ON_FILE_CREATION\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[ALIAS]\")) {\r",
+							"    tagsList.push(\"CARD_ON_FILE_USE\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[ALIASMODE]\") && pm.request.body[pm.request.body.mode].get(\"params[ALIASMODE]\").toLowerCase() === \"subscription\") {\r",
+							"    tagsList.push(\"SUBSCRIPTION\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[ALIASMODE]\") && pm.request.body[pm.request.body.mode].get(\"params[ALIASMODE]\").toLowerCase() === \"oneclick\") {\r",
+							"    tagsList.push(\"ONECLICK\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[3DSECUREOUTOFSCOPEREASON]\") && pm.request.body[pm.request.body.mode].get(\"params[3DSECUREOUTOFSCOPEREASON]\").toLowerCase() === \"moto\") {\r",
+							"    tagsList.push(\"MOTO\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[SUBMERCHANTEXTERNALID]\")) {\r",
+							"    tagsList.push(\"PAYFAC\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[XPAYSOLUTION]\")) {\r",
+							"    tagsList.push(\"XPAY\");\r",
+							"    \r",
+							"    if(pm.request.body[pm.request.body.mode].get(\"params[XPAYSOLUTION]\").toLowerCase() === \"apple\") {\r",
+							"        tagsList.push(\"APPLE\");\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[AMOUNT]\") && parseInt(pm.request.body[pm.request.body.mode].get(\"params[AMOUNT]\")) <= 3000) {\r",
+							"    tagsList.push(\"SMALL_AMOUNT\");\r",
+							"}\r",
+							"\r",
+							"pm.collectionVariables.set(\"tags\", JSON.stringify(tagsList));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "method",
+							"value": "payment",
+							"type": "text"
+						},
+						{
+							"key": "params[IDENTIFIER]",
+							"value": "{{udvIdentifier}}",
+							"type": "text"
+						},
+						{
+							"key": "params[OPERATIONTYPE]",
+							"value": "payment",
+							"type": "text"
+						},
+						{
+							"key": "params[AMOUNT]",
+							"value": "1000",
+							"type": "text"
+						},
+						{
+							"key": "params[VERSION]",
+							"value": "3.0",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTIDENT]",
+							"value": "John.doe42",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTEMAIL]",
+							"value": "hadi.doe@isp.com",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTREFERRER]",
+							"value": "http://site.com/cart.php",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTUSERAGENT]",
+							"value": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:56.0) Gecko/20100101 Firefox/56.0",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTIP]",
+							"value": "{{localVpnIp}}",
+							"type": "text"
+						},
+						{
+							"key": "params[ORDERID]",
+							"value": "5abe3c85547b8",
+							"type": "text"
+						},
+						{
+							"key": "params[DESCRIPTION]",
+							"value": "Achat de matériel informatique",
+							"type": "text"
+						},
+						{
+							"key": "params[HASH]",
+							"value": "{{hash}}",
+							"type": "text"
+						},
+						{
+							"key": "params[SELECTEDBRAND]",
+							"value": "visa",
+							"type": "text"
+						},
+						{
+							"key": "params[3DSECUREPREFERENCE]",
+							"value": "SCA",
+							"type": "text"
+						},
+						{
+							"key": "params[ALIAS]",
+							"value": "{{alias}}",
+							"type": "text"
+						},
+						{
+							"key": "params[ALIASMODE]",
+							"value": "oneclick",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{FRONT}}/service/rest/process.php",
+					"host": [
+						"{{FRONT}}"
+					],
+					"path": [
+						"service",
+						"rest",
+						"process.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PayFac-Get UDV data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"let data_ = pm.response.json().DATA;\r",
+							"\r",
+							"pm.collectionVariables.set(\"clientId\", data_.generalInformation.idClient);\r",
+							"pm.collectionVariables.set(\"udvIdentifier\", data_.setup.identifier);\r",
+							"pm.collectionVariables.set(\"merchantId\", data_.mid.idMid);\r",
+							"pm.collectionVariables.set(\"accountContractNumber\", data_.generalInformation.accContractNumber);\r",
+							"pm.collectionVariables.set(\"merchantCategoryCode\", data_.mid.merchantCategoryCode);\r",
+							"pm.collectionVariables.set(\"siret\",data_.generalInformation.siret);\r",
+							"pm.collectionVariables.set(\"currency\",data_.generalInformation.idProcessingCurrency);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "method",
+							"value": "getAllUdvData",
+							"type": "text"
+						},
+						{
+							"key": "params[0][id]",
+							"value": "500628",
+							"type": "text"
+						},
+						{
+							"key": "params[1][USERID]",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "params[1][USERNAME]",
+							"value": "be2bill-god1",
+							"type": "text"
+						},
+						{
+							"key": "params[1][USERSTATUS]",
+							"value": "active",
+							"type": "text"
+						},
+						{
+							"key": "params[1][INTERNALVERSION]",
+							"value": "1.2.0",
+							"type": "text"
+						},
+						{
+							"key": "params[1][INVOKER]",
+							"value": "intranet",
+							"type": "text"
+						},
+						{
+							"key": "params[1][IDLOG]",
+							"value": "63ff806fb6da62.95625603",
+							"type": "text"
+						},
+						{
+							"key": "params[1][USERIP]",
+							"value": "10.67.94.46",
+							"type": "text"
+						},
+						{
+							"key": "params[2][__t]",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "formatOutput",
+							"value": "json",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BACK}}/backoffice-service/service/rest/udvs.php",
+					"host": [
+						"{{BACK}}"
+					],
+					"path": [
+						"backoffice-service",
+						"service",
+						"rest",
+						"udvs.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PayFac-Get MID data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"let data_ = pm.response.json().DATA;\r",
+							"\r",
+							"pm.collectionVariables.set(\"threeDSecureDescriptor\", data_.threeDSecureDescriptor);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "method",
+							"value": "getMid",
+							"type": "text"
+						},
+						{
+							"key": "params[0][MIDID]",
+							"value": "{{merchantId}}",
+							"type": "text"
+						},
+						{
+							"key": "params[1][USERID]",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "params[1][USERNAME]",
+							"value": "be2bill-god1",
+							"type": "text"
+						},
+						{
+							"key": "params[1][USERSTATUS]",
+							"value": "active",
+							"type": "text"
+						},
+						{
+							"key": "params[1][INTERNALVERSION]",
+							"value": "1.2.0",
+							"type": "text"
+						},
+						{
+							"key": "params[1][INVOKER]",
+							"value": "intranet",
+							"type": "text"
+						},
+						{
+							"key": "params[1][IDLOG]",
+							"value": "63ff806fb6da62.95625603",
+							"type": "text"
+						},
+						{
+							"key": "params[1][USERIP]",
+							"value": "10.67.94.46",
+							"type": "text"
+						},
+						{
+							"key": "params[2][__t]",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "formatOutput",
+							"value": "json",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BACK}}/backoffice-service/service/rest/mids.php",
+					"host": [
+						"{{BACK}}"
+					],
+					"path": [
+						"backoffice-service",
+						"service",
+						"rest",
+						"mids.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PayFac-Get Secret",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set(\"secret\", pm.response.text().slice(1, -1));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "parameters[IDENTIFIER]",
+							"value": "{{udvIdentifier}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{TOOLKIT}}/transaction/generator/ajax-get-password",
+					"host": [
+						"{{TOOLKIT}}"
+					],
+					"path": [
+						"transaction",
+						"generator",
+						"ajax-get-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PayFac-Get Client  data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let data_ = pm.response.json().DATA;\r",
+							"\r",
+							"pm.collectionVariables.set(\"paymentFacilitatorId_cb\", data_.paymentFacilitator.galittIdCb);\r",
+							"pm.collectionVariables.set(\"paymentFacilitatorId_visa\", data_.paymentFacilitator.galittIdVisa);\r",
+							"pm.collectionVariables.set(\"paymentFacilitatorId_mastercard\", data_.paymentFacilitator.galittIdMc);\r",
+							"\r",
+							"pm.collectionVariables.set(\"descriptorPrefix_cb\", data_.paymentFacilitator.galittDescriptorPrefixCb);\r",
+							"pm.collectionVariables.set(\"descriptorPrefix_visa\", data_.paymentFacilitator.galittDescriptorPrefixVisa);\r",
+							"pm.collectionVariables.set(\"descriptorPrefix_mastercard\", data_.paymentFacilitator.galittDescriptorPrefixMc);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "method",
+							"value": "getAllClientData",
+							"type": "text"
+						},
+						{
+							"key": "params[0][id]",
+							"value": "{{clientId}}",
+							"type": "text"
+						},
+						{
+							"key": "params[1][USERID]",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "params[1][USERNAME]",
+							"value": "be2bill-god1",
+							"type": "text"
+						},
+						{
+							"key": "params[1][USERSTATUS]",
+							"value": "active",
+							"type": "text"
+						},
+						{
+							"key": "params[1][INTERNALVERSION]",
+							"value": "1.2.0",
+							"type": "text"
+						},
+						{
+							"key": "params[1][INVOKER]",
+							"value": "intranet",
+							"type": "text"
+						},
+						{
+							"key": "params[1][IDLOG]",
+							"value": "63ff806fb6da62.95625603",
+							"type": "text"
+						},
+						{
+							"key": "params[1][USERIP]",
+							"value": "10.67.94.46",
+							"type": "text"
+						},
+						{
+							"key": "params[2][__t]",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "formatOutput",
+							"value": "json",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BACK}}/backoffice-service/service/rest/clients.php",
+					"host": [
+						"{{BACK}}"
+					],
+					"path": [
+						"backoffice-service",
+						"service",
+						"rest",
+						"clients.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PayFac-Get Submerchant data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let submerchant = pm.response.json().items[0];\r",
+							"\r",
+							"pm.collectionVariables.set(\"submerchantExternalId\", submerchant.externalId);\r",
+							"pm.collectionVariables.set(\"submerchantSiret\", submerchant.siret);\r",
+							"pm.collectionVariables.set(\"submerchantCategoryCode\", submerchant.merchantCategoryCode);\r",
+							"\r",
+							"pm.collectionVariables.set(\"submerchantDescriptor\", submerchant.descriptor);\r",
+							"pm.collectionVariables.set(\"submerchantCity\", submerchant.address.city);\r",
+							"pm.collectionVariables.set(\"submerchantZipCode\", submerchant.address.zipCode);\r",
+							"pm.collectionVariables.set(\"submerchantCountry\", submerchant.address.country);\r",
+							"pm.collectionVariables.set(\"submerchantStreet\", submerchant.address.street);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://staging-payment.dlns.io/paymentFacilitators/submerchants?externalId=52322268200052",
+					"protocol": "https",
+					"host": [
+						"staging-payment",
+						"dlns",
+						"io"
+					],
+					"path": [
+						"paymentFacilitators",
+						"submerchants"
+					],
+					"query": [
+						{
+							"key": "externalId",
+							"value": "52322268200052"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1.1-PayFac - Payment with frictionless 3DS - Visa",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"eval(pm.collectionVariables.get(\"TestHelper\"));\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set('publicTransactionId', pm.response.json().TRANSACTIONID);\r",
+							"\r",
+							"if(pm.response.json().EXECCODE === \"0001\") {\r",
+							"    let base64EncodedHtml = pm.response.json().REDIRECTHTML;\r",
+							"    let decodedRedirectionHtml = getDecodedString_Base64(base64EncodedHtml)\r",
+							"    const redirectionParameters = parseRedirectionHtml(decodedRedirectionHtml);\r",
+							"\r",
+							"    pm.test(\"The redirection public Transaction ID is correct\", function () {\r",
+							"        pm.expect(redirectionParameters.transaction_public_id).to.eql(pm.collectionVariables.get('publicTransactionId'));\r",
+							"    });\r",
+							"\r",
+							"    pm.collectionVariables.set(\"redirectionTransactionId\", redirectionParameters.transaction_id);\r",
+							"    pm.collectionVariables.set(\"redirectionCardNetwork\", redirectionParameters.card_network);\r",
+							"    pm.collectionVariables.set(\"redirectionMethodUrl\", redirectionParameters.method_url);\r",
+							"    pm.collectionVariables.set(\"redirectionMethodData\", redirectionParameters.method_data);\r",
+							"    pm.collectionVariables.set(\"redirectionTarget\", redirectionParameters.target);\r",
+							"\r",
+							"    postman.setNextRequest(\"Send preprare authenticate\");\r",
+							"}\r",
+							"else {\r",
+							"    pm.test(\"Transaction requires 3D secure authentication\", function () {\r",
+							"        pm.expect(pm.response.json().EXECCODE).to.eql(\"0000\");\r",
+							"    });\r",
+							"\r",
+							"    postman.setNextRequest(\"Get GCP transaction data\");\r",
+							"}\r",
+							"\r",
+							"pm.collectionVariables.set(\"nextRequest\", \"1.2-PayFac - Payment with CardOnFile Creation Subscription - Visa\");\r",
+							"\r",
+							"console.log(\"Waiting for 5 seconds before next request.\");\r",
+							"setTimeout(() => {console.log(\"Waiting done.\");}, 5 * 1000);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"eval(pm.collectionVariables.get(\"TestHelper\"));\r",
+							"\r",
+							"pm.collectionVariables.set('hash', computeHashValue(pm.collectionVariables.get('secret')));\r",
+							"\r",
+							"pm.collectionVariables.set(\"selectedBrand\", pm.request.body[pm.request.body.mode].get(\"params[SELECTEDBRAND]\"));\r",
+							"pm.collectionVariables.set(\"cardCode\", pm.request.body[pm.request.body.mode].get(\"params[CARDCODE]\"));\r",
+							"pm.collectionVariables.set(\"cardCvv\", pm.request.body[pm.request.body.mode].get(\"params[CARDCVV]\"));\r",
+							"pm.collectionVariables.set(\"cardValidityDate\", pm.request.body[pm.request.body.mode].get(\"params[CARDVALIDITYDATE]\"));\r",
+							"pm.collectionVariables.set(\"clientIP\", pm.collectionVariables.replaceIn(pm.request.body[pm.request.body.mode].get(\"params[CLIENTIP]\")));\r",
+							"\r",
+							"let tagsList = [\"PAYFAC\"];\r",
+							"\r",
+							"let threeDSSecurePreference = pm.request.body[pm.request.body.mode].get(\"params[3DSECUREPREFERENCE]\");\r",
+							"if(threeDSSecurePreference) {\r",
+							"    pm.collectionVariables.set(\"threeDSecurePreference\", threeDSSecurePreference);\r",
+							"    tagsList.push(\"INTERNAL_MPI\");\r",
+							"    tagsList.push(\"3DS\");\r",
+							"}\r",
+							"\r",
+							"let threeDSecureMode = pm.request.body[pm.request.body.mode].get(\"params[3DSECUREMODE]\");\r",
+							"if(threeDSecureMode) {\r",
+							"    pm.collectionVariables.set(\"threeDSecureMode\", threeDSecureMode);\r",
+							"    tagsList.push(\"EXTERNAL_MPI\");\r",
+							"    tagsList.push(\"3DS\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[CREATEALIAS]\") && pm.request.body[pm.request.body.mode].get(\"params[CREATEALIAS]\").toLowerCase() === \"yes\") {\r",
+							"    tagsList.push(\"CARD_ON_FILE_CREATION\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[ALIAS]\")) {\r",
+							"    tagsList.push(\"CARD_ON_FILE_USE\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[ALIASMODE]\") && pm.request.body[pm.request.body.mode].get(\"params[ALIASMODE]\").toLowerCase() === \"subscription\") {\r",
+							"    tagsList.push(\"SUBSCRIPTION\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[ALIASMODE]\") && pm.request.body[pm.request.body.mode].get(\"params[ALIASMODE]\").toLowerCase() === \"oneclick\") {\r",
+							"    tagsList.push(\"ONECLICK\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[3DSECUREOUTOFSCOPEREASON]\") && pm.request.body[pm.request.body.mode].get(\"params[3DSECUREOUTOFSCOPEREASON]\").toLowerCase() === \"moto\") {\r",
+							"    tagsList.push(\"MOTO\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[SUBMERCHANTEXTERNALID]\")) {\r",
+							"    tagsList.push(\"PAYFAC\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[XPAYSOLUTION]\")) {\r",
+							"    tagsList.push(\"XPAY\");\r",
+							"    \r",
+							"    if(pm.request.body[pm.request.body.mode].get(\"params[XPAYSOLUTION]\").toLowerCase() === \"apple\") {\r",
+							"        tagsList.push(\"APPLE\");\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[AMOUNT]\") && parseInt(pm.request.body[pm.request.body.mode].get(\"params[AMOUNT]\")) <= 3000) {\r",
+							"    tagsList.push(\"SMALL_AMOUNT\");\r",
+							"}\r",
+							"\r",
+							"pm.collectionVariables.set(\"tags\", JSON.stringify(tagsList));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "method",
+							"value": "payment",
+							"type": "text"
+						},
+						{
+							"key": "params[IDENTIFIER]",
+							"value": "{{udvIdentifier}}",
+							"type": "text"
+						},
+						{
+							"key": "params[OPERATIONTYPE]",
+							"value": "payment",
+							"type": "text"
+						},
+						{
+							"key": "params[AMOUNT]",
+							"value": "1000",
+							"type": "text"
+						},
+						{
+							"key": "params[VERSION]",
+							"value": "3.0",
+							"type": "text"
+						},
+						{
+							"key": "params[CARDCODE]",
+							"value": "4976074999900019",
+							"type": "text"
+						},
+						{
+							"key": "params[CARDCVV]",
+							"value": "123",
+							"type": "text"
+						},
+						{
+							"key": "params[CARDVALIDITYDATE]",
+							"value": "12-24",
+							"type": "text"
+						},
+						{
+							"key": "params[CARDFULLNAME]",
+							"value": "Firstname Lastname",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTIDENT]",
+							"value": "firstname.lastname",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTEMAIL]",
+							"value": "firstname.lastname@test.com",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTREFERRER]",
+							"value": "http://site.com/cart.php",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTUSERAGENT]",
+							"value": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:56.0) Gecko/20100101 Firefox/56.0",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTIP]",
+							"value": "{{localVpnIp}}",
+							"type": "text"
+						},
+						{
+							"key": "params[ORDERID]",
+							"value": "TESTORDERID",
+							"type": "text"
+						},
+						{
+							"key": "params[DESCRIPTION]",
+							"value": "Achat de matériel informatique",
+							"type": "text"
+						},
+						{
+							"key": "params[HASH]",
+							"value": "{{hash}}",
+							"type": "text"
+						},
+						{
+							"key": "params[SELECTEDBRAND]",
+							"value": "visa",
+							"type": "text"
+						},
+						{
+							"key": "params[3DSECURE]",
+							"value": "Yes",
+							"type": "text"
+						},
+						{
+							"key": "params[3DSECUREPREFERENCE]",
+							"value": "FRICTIONLESS",
+							"type": "text"
+						},
+						{
+							"key": "params[SUBMERCHANTEXTERNALID]",
+							"value": "{{submerchantExternalId}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{FRONT}}/service/rest/process.php",
+					"host": [
+						"{{FRONT}}"
+					],
+					"path": [
+						"service",
+						"rest",
+						"process.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1.2-PayFac - Payment with CardOnFile Creation Subscription - Visa",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"eval(pm.collectionVariables.get(\"TestHelper\"));\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set('publicTransactionId', pm.response.json().TRANSACTIONID);\r",
+							"\r",
+							"if(pm.response.json().EXECCODE === \"0001\") {\r",
+							"    let base64EncodedHtml = pm.response.json().REDIRECTHTML;\r",
+							"    let decodedRedirectionHtml = getDecodedString_Base64(base64EncodedHtml)\r",
+							"    const redirectionParameters = parseRedirectionHtml(decodedRedirectionHtml);\r",
+							"\r",
+							"    pm.test(\"The redirection public Transaction ID is correct\", function () {\r",
+							"        pm.expect(redirectionParameters.transaction_public_id).to.eql(pm.collectionVariables.get('publicTransactionId'));\r",
+							"    });\r",
+							"\r",
+							"    pm.collectionVariables.set(\"redirectionTransactionId\", redirectionParameters.transaction_id);\r",
+							"    pm.collectionVariables.set(\"redirectionCardNetwork\", redirectionParameters.card_network);\r",
+							"    pm.collectionVariables.set(\"redirectionMethodUrl\", redirectionParameters.method_url);\r",
+							"    pm.collectionVariables.set(\"redirectionMethodData\", redirectionParameters.method_data);\r",
+							"    pm.collectionVariables.set(\"redirectionTarget\", redirectionParameters.target);\r",
+							"\r",
+							"    postman.setNextRequest(\"Send preprare authenticate\");\r",
+							"}\r",
+							"else {\r",
+							"    pm.test(\"Transaction requires 3D secure authentication\", function () {\r",
+							"        pm.expect(pm.response.json().EXECCODE).to.eql(\"0000\");\r",
+							"    });\r",
+							"\r",
+							"    postman.setNextRequest(\"Get GCP transaction data\");\r",
+							"}\r",
+							"\r",
+							"pm.collectionVariables.set(\"nextRequest\", \"1.3-PayFac - Payment with CardOnFile Use Subscription - Visa Copy\");\r",
+							"\r",
+							"console.log(\"Waiting for 5 seconds before next request.\");\r",
+							"setTimeout(() => {console.log(\"Waiting done.\");}, 5 * 1000);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"eval(pm.collectionVariables.get(\"TestHelper\"));\r",
+							"\r",
+							"pm.collectionVariables.set('hash', computeHashValue(pm.collectionVariables.get('secret')));\r",
+							"\r",
+							"pm.collectionVariables.set(\"selectedBrand\", pm.request.body[pm.request.body.mode].get(\"params[SELECTEDBRAND]\"));\r",
+							"pm.collectionVariables.set(\"cardCode\", pm.request.body[pm.request.body.mode].get(\"params[CARDCODE]\"));\r",
+							"pm.collectionVariables.set(\"cardCvv\", pm.request.body[pm.request.body.mode].get(\"params[CARDCVV]\"));\r",
+							"pm.collectionVariables.set(\"cardValidityDate\", pm.request.body[pm.request.body.mode].get(\"params[CARDVALIDITYDATE]\"));\r",
+							"pm.collectionVariables.set(\"clientIP\", pm.collectionVariables.replaceIn(pm.request.body[pm.request.body.mode].get(\"params[CLIENTIP]\")));\r",
+							"\r",
+							"let tagsList = [\"PAYFAC\"];\r",
+							"\r",
+							"let threeDSSecurePreference = pm.request.body[pm.request.body.mode].get(\"params[3DSECUREPREFERENCE]\");\r",
+							"if(threeDSSecurePreference) {\r",
+							"    pm.collectionVariables.set(\"threeDSecurePreference\", threeDSSecurePreference);\r",
+							"    tagsList.push(\"INTERNAL_MPI\");\r",
+							"    tagsList.push(\"3DS\");\r",
+							"}\r",
+							"\r",
+							"let threeDSecureMode = pm.request.body[pm.request.body.mode].get(\"params[3DSECUREMODE]\");\r",
+							"if(threeDSecureMode) {\r",
+							"    pm.collectionVariables.set(\"threeDSecureMode\", threeDSecureMode);\r",
+							"    tagsList.push(\"EXTERNAL_MPI\");\r",
+							"    tagsList.push(\"3DS\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[CREATEALIAS]\") && pm.request.body[pm.request.body.mode].get(\"params[CREATEALIAS]\").toLowerCase() === \"yes\") {\r",
+							"    tagsList.push(\"CARD_ON_FILE_CREATION\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[ALIAS]\")) {\r",
+							"    tagsList.push(\"CARD_ON_FILE_USE\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[ALIASMODE]\") && pm.request.body[pm.request.body.mode].get(\"params[ALIASMODE]\").toLowerCase() === \"subscription\") {\r",
+							"    tagsList.push(\"SUBSCRIPTION\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[ALIASMODE]\") && pm.request.body[pm.request.body.mode].get(\"params[ALIASMODE]\").toLowerCase() === \"oneclick\") {\r",
+							"    tagsList.push(\"ONECLICK\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[3DSECUREOUTOFSCOPEREASON]\") && pm.request.body[pm.request.body.mode].get(\"params[3DSECUREOUTOFSCOPEREASON]\").toLowerCase() === \"moto\") {\r",
+							"    tagsList.push(\"MOTO\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[SUBMERCHANTEXTERNALID]\")) {\r",
+							"    tagsList.push(\"PAYFAC\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[XPAYSOLUTION]\")) {\r",
+							"    tagsList.push(\"XPAY\");\r",
+							"    \r",
+							"    if(pm.request.body[pm.request.body.mode].get(\"params[XPAYSOLUTION]\").toLowerCase() === \"apple\") {\r",
+							"        tagsList.push(\"APPLE\");\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[AMOUNT]\") && parseInt(pm.request.body[pm.request.body.mode].get(\"params[AMOUNT]\")) <= 3000) {\r",
+							"    tagsList.push(\"SMALL_AMOUNT\");\r",
+							"}\r",
+							"\r",
+							"pm.collectionVariables.set(\"tags\", JSON.stringify(tagsList));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "method",
+							"value": "payment",
+							"type": "text"
+						},
+						{
+							"key": "params[IDENTIFIER]",
+							"value": "{{udvIdentifier}}",
+							"type": "text"
+						},
+						{
+							"key": "params[OPERATIONTYPE]",
+							"value": "payment",
+							"type": "text"
+						},
+						{
+							"key": "params[AMOUNT]",
+							"value": "1000",
+							"type": "text"
+						},
+						{
+							"key": "params[VERSION]",
+							"value": "3.0",
+							"type": "text"
+						},
+						{
+							"key": "params[CARDCODE]",
+							"value": "4976074999900019",
+							"type": "text"
+						},
+						{
+							"key": "params[CARDCVV]",
+							"value": "123",
+							"type": "text"
+						},
+						{
+							"key": "params[CARDVALIDITYDATE]",
+							"value": "12-24",
+							"type": "text"
+						},
+						{
+							"key": "params[CARDFULLNAME]",
+							"value": "Firstname Lastname",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTIDENT]",
+							"value": "firstname.lastname",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTEMAIL]",
+							"value": "firstname.lastname@test.com",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTREFERRER]",
+							"value": "http://site.com/cart.php",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTUSERAGENT]",
+							"value": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:56.0) Gecko/20100101 Firefox/56.0",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTIP]",
+							"value": "{{localVpnIp}}",
+							"type": "text"
+						},
+						{
+							"key": "params[ORDERID]",
+							"value": "TESTORDERID",
+							"type": "text"
+						},
+						{
+							"key": "params[DESCRIPTION]",
+							"value": "Achat de matériel informatique",
+							"type": "text"
+						},
+						{
+							"key": "params[HASH]",
+							"value": "{{hash}}",
+							"type": "text"
+						},
+						{
+							"key": "params[SELECTEDBRAND]",
+							"value": "visa",
+							"type": "text"
+						},
+						{
+							"key": "params[SUBMERCHANTEXTERNALID]",
+							"value": "{{submerchantExternalId}}",
+							"type": "text"
+						},
+						{
+							"key": "params[3DSECURE]",
+							"value": "Yes",
+							"type": "text"
+						},
+						{
+							"key": "params[3DSECUREPREFERENCE]",
+							"value": "SCAMANDATE",
+							"type": "text"
+						},
+						{
+							"key": "params[CREATEALIAS]",
+							"value": "yes",
+							"type": "text"
+						},
+						{
+							"key": "params[ALIASMODE]",
+							"value": "subscription",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{FRONT}}/service/rest/process.php",
+					"host": [
+						"{{FRONT}}"
+					],
+					"path": [
+						"service",
+						"rest",
+						"process.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1.3-PayFac - Payment with CardOnFile Use Subscription - Visa",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"eval(pm.collectionVariables.get(\"TestHelper\"));\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set('publicTransactionId', pm.response.json().TRANSACTIONID);\r",
+							"\r",
+							"if(pm.response.json().EXECCODE === \"0001\") {\r",
+							"    let base64EncodedHtml = pm.response.json().REDIRECTHTML;\r",
+							"    let decodedRedirectionHtml = getDecodedString_Base64(base64EncodedHtml)\r",
+							"    const redirectionParameters = parseRedirectionHtml(decodedRedirectionHtml);\r",
+							"\r",
+							"    pm.test(\"The redirection public Transaction ID is correct\", function () {\r",
+							"        pm.expect(redirectionParameters.transaction_public_id).to.eql(pm.collectionVariables.get('publicTransactionId'));\r",
+							"    });\r",
+							"\r",
+							"    pm.collectionVariables.set(\"redirectionTransactionId\", redirectionParameters.transaction_id);\r",
+							"    pm.collectionVariables.set(\"redirectionCardNetwork\", redirectionParameters.card_network);\r",
+							"    pm.collectionVariables.set(\"redirectionMethodUrl\", redirectionParameters.method_url);\r",
+							"    pm.collectionVariables.set(\"redirectionMethodData\", redirectionParameters.method_data);\r",
+							"    pm.collectionVariables.set(\"redirectionTarget\", redirectionParameters.target);\r",
+							"\r",
+							"    postman.setNextRequest(\"Send preprare authenticate\");\r",
+							"}\r",
+							"else {\r",
+							"    pm.test(\"Transaction requires 3D secure authentication\", function () {\r",
+							"        pm.expect(pm.response.json().EXECCODE).to.eql(\"0000\");\r",
+							"    });\r",
+							"\r",
+							"    postman.setNextRequest(\"Get GCP transaction data\");\r",
+							"}\r",
+							"\r",
+							"pm.collectionVariables.set(\"nextRequest\", \"2-Launch COLLECT NATIXIS script\");\r",
+							"\r",
+							"console.log(\"Waiting for 5 seconds before next request.\");\r",
+							"setTimeout(() => {console.log(\"Waiting done.\");}, 5 * 1000);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"eval(pm.collectionVariables.get(\"TestHelper\"));\r",
+							"\r",
+							"pm.collectionVariables.set('hash', computeHashValue(pm.collectionVariables.get('secret')));\r",
+							"\r",
+							"pm.collectionVariables.set(\"selectedBrand\", pm.request.body[pm.request.body.mode].get(\"params[SELECTEDBRAND]\"));\r",
+							"pm.collectionVariables.set(\"cardCode\", pm.request.body[pm.request.body.mode].get(\"params[CARDCODE]\"));\r",
+							"pm.collectionVariables.set(\"cardCvv\", pm.request.body[pm.request.body.mode].get(\"params[CARDCVV]\"));\r",
+							"pm.collectionVariables.set(\"cardValidityDate\", pm.request.body[pm.request.body.mode].get(\"params[CARDVALIDITYDATE]\"));\r",
+							"pm.collectionVariables.set(\"clientIP\", pm.collectionVariables.replaceIn(pm.request.body[pm.request.body.mode].get(\"params[CLIENTIP]\")));\r",
+							"\r",
+							"let tagsList = [\"PAYFAC\"];\r",
+							"\r",
+							"let threeDSSecurePreference = pm.request.body[pm.request.body.mode].get(\"params[3DSECUREPREFERENCE]\");\r",
+							"if(threeDSSecurePreference) {\r",
+							"    pm.collectionVariables.set(\"threeDSecurePreference\", threeDSSecurePreference);\r",
+							"    tagsList.push(\"INTERNAL_MPI\");\r",
+							"    tagsList.push(\"3DS\");\r",
+							"}\r",
+							"\r",
+							"let threeDSecureMode = pm.request.body[pm.request.body.mode].get(\"params[3DSECUREMODE]\");\r",
+							"if(threeDSecureMode) {\r",
+							"    pm.collectionVariables.set(\"threeDSecureMode\", threeDSecureMode);\r",
+							"    tagsList.push(\"EXTERNAL_MPI\");\r",
+							"    tagsList.push(\"3DS\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[CREATEALIAS]\") && pm.request.body[pm.request.body.mode].get(\"params[CREATEALIAS]\").toLowerCase() === \"yes\") {\r",
+							"    tagsList.push(\"CARD_ON_FILE_CREATION\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[ALIAS]\")) {\r",
+							"    tagsList.push(\"CARD_ON_FILE_USE\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[ALIASMODE]\") && pm.request.body[pm.request.body.mode].get(\"params[ALIASMODE]\").toLowerCase() === \"subscription\") {\r",
+							"    tagsList.push(\"SUBSCRIPTION\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[ALIASMODE]\") && pm.request.body[pm.request.body.mode].get(\"params[ALIASMODE]\").toLowerCase() === \"oneclick\") {\r",
+							"    tagsList.push(\"ONECLICK\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[3DSECUREOUTOFSCOPEREASON]\") && pm.request.body[pm.request.body.mode].get(\"params[3DSECUREOUTOFSCOPEREASON]\").toLowerCase() === \"moto\") {\r",
+							"    tagsList.push(\"MOTO\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[SUBMERCHANTEXTERNALID]\")) {\r",
+							"    tagsList.push(\"PAYFAC\");\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[XPAYSOLUTION]\")) {\r",
+							"    tagsList.push(\"XPAY\");\r",
+							"    \r",
+							"    if(pm.request.body[pm.request.body.mode].get(\"params[XPAYSOLUTION]\").toLowerCase() === \"apple\") {\r",
+							"        tagsList.push(\"APPLE\");\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"if(pm.request.body[pm.request.body.mode].get(\"params[AMOUNT]\") && parseInt(pm.request.body[pm.request.body.mode].get(\"params[AMOUNT]\")) <= 3000) {\r",
+							"    tagsList.push(\"SMALL_AMOUNT\");\r",
+							"}\r",
+							"\r",
+							"pm.collectionVariables.set(\"tags\", JSON.stringify(tagsList));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "method",
+							"value": "payment",
+							"type": "text"
+						},
+						{
+							"key": "params[IDENTIFIER]",
+							"value": "{{udvIdentifier}}",
+							"type": "text"
+						},
+						{
+							"key": "params[OPERATIONTYPE]",
+							"value": "payment",
+							"type": "text"
+						},
+						{
+							"key": "params[AMOUNT]",
+							"value": "1000",
+							"type": "text"
+						},
+						{
+							"key": "params[VERSION]",
+							"value": "3.0",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTIDENT]",
+							"value": "firstname.lastname",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTEMAIL]",
+							"value": "firstname.lastname@test.com",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTREFERRER]",
+							"value": "http://site.com/cart.php",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTUSERAGENT]",
+							"value": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:56.0) Gecko/20100101 Firefox/56.0",
+							"type": "text"
+						},
+						{
+							"key": "params[CLIENTIP]",
+							"value": "{{localVpnIp}}",
+							"type": "text"
+						},
+						{
+							"key": "params[ORDERID]",
+							"value": "TESTORDERID",
+							"type": "text"
+						},
+						{
+							"key": "params[DESCRIPTION]",
+							"value": "Achat de matériel informatique",
+							"type": "text"
+						},
+						{
+							"key": "params[HASH]",
+							"value": "{{hash}}",
+							"type": "text"
+						},
+						{
+							"key": "params[SELECTEDBRAND]",
+							"value": "visa",
+							"type": "text"
+						},
+						{
+							"key": "params[SUBMERCHANTEXTERNALID]",
+							"value": "{{submerchantExternalId}}",
+							"type": "text"
+						},
+						{
+							"key": "params[3DSECURE]",
+							"value": "Yes",
+							"type": "text"
+						},
+						{
+							"key": "params[3DSECUREPREFERENCE]",
+							"value": "SCA",
+							"type": "text"
+						},
+						{
+							"key": "params[ALIAS]",
+							"value": "{{alias}}",
+							"type": "text"
+						},
+						{
+							"key": "params[ALIASMODE]",
+							"value": "subscription",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{FRONT}}/service/rest/process.php",
+					"host": [
+						"{{FRONT}}"
+					],
+					"path": [
+						"service",
+						"rest",
+						"process.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2-Launch COLLECT NATIXIS script",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"The script has finished running\", function () {\r",
+							"    pm.response.to.have.status(504);\r",
+							"});\r",
+							"\r",
+							"console.log(\"Waiting for 10 minutes before next request.\")\r",
+							"setTimeout(() => {console.log(\"Waiting done.\");}, 10 * 60 * 1000);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "p[force]",
+							"value": "yes",
+							"type": "text"
+						},
+						{
+							"key": "p[retries]",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "p[maxCollectionSize]",
+							"value": "50000",
+							"type": "text"
+						},
+						{
+							"key": "p[profiling]",
+							"value": "no",
+							"type": "text"
+						},
+						{
+							"key": "p[profiling-output-debug]",
+							"value": "mongo",
+							"type": "text"
+						},
+						{
+							"key": "p[profiling-db-host]",
+							"value": "mongodb://pc-dev-db3.int.rtblw.com:27017",
+							"type": "text"
+						},
+						{
+							"key": "p[etl]",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "p[etl]",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "p[execute]",
+							"value": "Execute",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{TOOLKIT}}/processes/scripts/run?path=batch/scripts/collect/natixis.json",
+					"host": [
+						"{{TOOLKIT}}"
+					],
+					"path": [
+						"processes",
+						"scripts",
+						"run"
+					],
+					"query": [
+						{
+							"key": "path",
+							"value": "batch/scripts/collect/natixis.json"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3-Get Telecollect XML files list (UPDATED)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.code == 504) {\r",
+							"    postman.setNextRequest(pm.info.requestName);\r",
+							"}\r",
+							"else {\r",
+							"    pm.test(\"Status code is 200\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"    });\r",
+							"\r",
+							"    let telecollectXmlFilesInformation = getGeneratedFilesInformation(pm.response.text());\r",
+							"    let telecollectXmlFilesToDownload = getFilesCreatedAfterLastExecutedTransactions(telecollectXmlFilesInformation);\r",
+							"\r",
+							"    pm.test(\"The Telecollect XML files have been identified\", function () {\r",
+							"        pm.expect(telecollectXmlFilesToDownload.length).to.be.above(0);\r",
+							"    });\r",
+							"\r",
+							"    if(telecollectXmlFilesToDownload.length && areAllTelecollectFilesToDownloadReady(telecollectXmlFilesToDownload)) {\r",
+							"        pm.collectionVariables.set('xmlFilesToDownload', JSON.stringify(telecollectXmlFilesToDownload));\r",
+							"        pm.collectionVariables.set('xmlFilesToParse', JSON.stringify(telecollectXmlFilesToDownload));\r",
+							"        pm.collectionVariables.set('filesToDelete', JSON.stringify(getFilesToDelete(telecollectXmlFilesToDownload)));\r",
+							"\r",
+							"        pm.test(\"The Telecollect XML files are completely generated and ready to download\", function () {\r",
+							"            pm.expect(true).to.be.true;\r",
+							"        });\r",
+							"    }\r",
+							"    else {\r",
+							"        postman.setNextRequest(pm.info.requestName);\r",
+							"        \r",
+							"        console.log(\"Waiting for 1 minute before next request.\")\r",
+							"        setTimeout(() => {console.log(\"Waiting done.\");}, 1 * 60 * 1000);\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"/*[{filename, date}]*/ function getGeneratedFilesInformation(/*String*/ generatedFilesPageHtml) {\r",
+							"    let generatedFilesInformation = [];\r",
+							"\r",
+							"    let cheerio = require(\"cheerio\");\r",
+							"    let $ = cheerio.load(generatedFilesPageHtml);\r",
+							"    \r",
+							"    let trElements = $(\"tr\");\r",
+							"    trElements.splice(0, 1);  // remove the first row which is empty.\r",
+							"    trElements.splice(-1, 1);  // remove the last row containing the summary of the results display.\r",
+							"\r",
+							"    trElements.each(function (index, tr) {\r",
+							"        let tdElements = $(tr).find(\"td\");\r",
+							"        generatedFilesInformation.push({\"filename\" : tdElements.eq(0).text(), \"date\" : tdElements.eq(1).text()});\r",
+							"    });\r",
+							"\r",
+							"    return generatedFilesInformation;\r",
+							"}\r",
+							"\r",
+							"/*[{filename, date}]*/ function getFilesCreatedAfterLastExecutedTransactions(/*[{filename, date}]*/ generatedFilesInformation) {\r",
+							"    let generatedFilesOfInterest = [];\r",
+							"\r",
+							"    let serverDate = new Date(postman.getResponseHeader(\"Date\"));\r",
+							"    let serverHourDifference = serverDate.getHours() - serverDate.getUTCHours(); //server time is set at the UTC timezone\r",
+							"\r",
+							"    let lastTransactionDate = new Date(pm.collectionVariables.get(\"lastTransactionTimestamp\"));\r",
+							"    //The server hosting the Telecollect files is at a timezone one hour earlier than France's.\r",
+							"    lastTransactionDate.setHours(lastTransactionDate.getHours() - serverHourDifference);\r",
+							"    let lastTransactionTimestamp_atServerTime = Date.parse(lastTransactionDate);\r",
+							"\r",
+							"    generatedFilesInformation.forEach(function(fileInformation) {\r",
+							"        let fileTimestamp = Date.parse(fileInformation.date);\r",
+							"\r",
+							"        if (fileTimestamp > lastTransactionTimestamp_atServerTime) {\r",
+							"            generatedFilesOfInterest.push(fileInformation.filename);\r",
+							"        }\r",
+							"    })\r",
+							"\r",
+							"    return generatedFilesOfInterest;\r",
+							"}\r",
+							"\r",
+							"function getFilesToDelete(telecollectXmlFilesToDownload) {\r",
+							"    let filesToDelete = [];\r",
+							"\r",
+							"    telecollectXmlFilesToDownload.forEach(function(batchXml) {\r",
+							"        let sixDigitBatchNumber = batchXml.match(/\\d+/);\r",
+							"\r",
+							"        filesToDelete.push(`to_encrypt-batch_${sixDigitBatchNumber}.xml`);\r",
+							"        filesToDelete.push(`filecb2a-${sixDigitBatchNumber}-000001`);\r",
+							"        filesToDelete.push(`filecb2a-${sixDigitBatchNumber}-000001.txt`);\r",
+							"    })\r",
+							"\r",
+							"    return filesToDelete;\r",
+							"}\r",
+							"\r",
+							"function areAllTelecollectFilesToDownloadReady(telecollectXmlFilesToDownload) {\r",
+							"    let areTelecollectFilesReady = true;\r",
+							"\r",
+							"    telecollectXmlFilesToDownload.forEach(filename => {\r",
+							"        if (! filename.startsWith('to_encrypt-batch_')) {\r",
+							"            areTelecollectFilesReady = false;\r",
+							"        }\r",
+							"    });\r",
+							"\r",
+							"    return areTelecollectFilesReady;\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Upgrade-Insecure-Requests",
+						"value": "1",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Referer",
+						"value": "https://uat-stage-toolkit.pc-dlv-toolkit2.int.rtblw.com/files/generated-files/index",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\"",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "document",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "navigate",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "same-origin",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Sec-Fetch-User",
+						"value": "?1",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Cache-Control",
+						"value": "max-age=0",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Origin",
+						"value": "https://uat-stage-toolkit.pc-dlv-toolkit2.int.rtblw.com",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{TOOLKIT}}/files/generated-files/index?id=1&sort=date-",
+					"host": [
+						"{{TOOLKIT}}"
+					],
+					"path": [
+						"files",
+						"generated-files",
+						"index"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						},
+						{
+							"key": "sort",
+							"value": "date-"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4-Dowload Telecollect XML files",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.code == 504) {\r",
+							"    postman.setNextRequest(pm.info.requestName);\r",
+							"}\r",
+							"else {\r",
+							"    let xmlFilesToDownload = JSON.parse(pm.collectionVariables.get('xmlFilesToDownload'));\r",
+							"    pm.collectionVariables.set(xmlFilesToDownload[0], pm.response.text())\r",
+							"\r",
+							"    pm.test(`The download of ${xmlFilesToDownload[0]} is successful`, function () {\r",
+							"        pm.expect(pm.response.headers.has(\"Content-Disposition\")).to.be.true;\r",
+							"        pm.expect(pm.response.headers.get(\"Content-Disposition\")).to.match(/^attachment/);\r",
+							"    }); \r",
+							"\r",
+							"    xmlFilesToDownload.splice(0, 1);\r",
+							"    pm.collectionVariables.set('xmlFilesToDownload', JSON.stringify(xmlFilesToDownload));\r",
+							"\r",
+							"    if(xmlFilesToDownload.length) {\r",
+							"        postman.setNextRequest(pm.info.requestName);\r",
+							"    }\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let xmlFilesToDownload = JSON.parse(pm.collectionVariables.get('xmlFilesToDownload'));\r",
+							"\r",
+							"pm.collectionVariables.set('currentlyDownloadedFile', xmlFilesToDownload[0])\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{TOOLKIT}}/files/generated-files/download?id=1&file_name={{currentlyDownloadedFile}}",
+					"host": [
+						"{{TOOLKIT}}"
+					],
+					"path": [
+						"files",
+						"generated-files",
+						"download"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						},
+						{
+							"key": "file_name",
+							"value": "{{currentlyDownloadedFile}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5-Create the final Telecollect XML to send",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"eval(pm.collectionVariables.get(\"TestHelper\"));\r",
+							"\r",
+							"let xmlFilesToParse = JSON.parse(pm.collectionVariables.get('xmlFilesToParse'));\r",
+							"let executedTransactions = JSON.parse(pm.collectionVariables.get(\"transactions\"));\r",
+							"\r",
+							"addMerchantCardAcceptorToExecutedTransactionsData(pm.response.json(), executedTransactions);\r",
+							"\r",
+							"let finalFilteredResult = getFinalFilteredResultObject(xmlFilesToParse, executedTransactions);\r",
+							"\r",
+							"console.log(\"Final Transactions filtered from the telecollect files :\");\r",
+							"console.log(finalFilteredResult);\r",
+							"\r",
+							"buildXmlTelecollectFile(xmlFilesToParse[0], finalFilteredResult, executedTransactions);\r",
+							"\r",
+							"console.log(\"Final executed Transactions summary to keep :\");\r",
+							"console.log(executedTransactions);\r",
+							"\r",
+							"\r",
+							"function addMerchantCardAcceptorToExecutedTransactionsData(routingData, executedTransactions) {\r",
+							"    executedTransactions.forEach(executedTransaction => {\r",
+							"        let merchantRoutingData = routingData.filter(routingDatum => routingDatum.merchant.includes(executedTransaction[\"merchantId\"]) && routingDatum.merchant.match(/\\d+/)[0] === executedTransaction[\"merchantId\"]);\r",
+							"\r",
+							"        pm.expect(merchantRoutingData.length).to.equal(2);\r",
+							"\r",
+							"        let merchantNatixisRoutingData = merchantRoutingData.filter(merchantRoutingDatum => merchantRoutingDatum.merchant.includes(\"rsb\") == false);\r",
+							"\r",
+							"        pm.test(\"The merchant's Natixis routing information is found\", function () {\r",
+							"            pm.expect(merchantNatixisRoutingData.length).to.equal(1);\r",
+							"        });\r",
+							"\r",
+							"        executedTransaction[\"merchantCardAcceptor\"] = merchantNatixisRoutingData[0].merchant;\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"function getFinalFilteredResultObject(telecollectFilesToParse, executedTransactions) {\r",
+							"    let finalFilteredResults = [];\r",
+							"\r",
+							"    telecollectFilesToParse.forEach(function(xmlFile) {\r",
+							"        let filteredResults = {};\r",
+							"        filteredResults.sourceXmlFile = xmlFile;\r",
+							"        filteredResults.transactionsPerCardAcceptor = getFilteredTransactionObjectsPerCardAcceptor(xmlFile, executedTransactions);\r",
+							"        \r",
+							"        if(Object.keys(filteredResults.transactionsPerCardAcceptor).length) {\r",
+							"            finalFilteredResults.push(filteredResults);\r",
+							"        }\r",
+							"    });\r",
+							"\r",
+							"    pm.test(\"All executed transactions are found in a single downloaded XML\", function () { //maybe replace the logic in this bloc with one that finds a filteredResult containing all transactions\r",
+							"        pm.expect(finalFilteredResults.length).to.equal(1);\r",
+							"\r",
+							"        let finalFilteredResultTransactionCount = 0;\r",
+							"        Object.values(finalFilteredResults[0].transactionsPerCardAcceptor).forEach(transactions => {\r",
+							"            finalFilteredResultTransactionCount += transactions.length;\r",
+							"        });\r",
+							"\r",
+							"        pm.expect(finalFilteredResultTransactionCount).to.equal(executedTransactions.length);\r",
+							"    });\r",
+							"\r",
+							"    return finalFilteredResults[0];\r",
+							"}\r",
+							"\r",
+							"function getFilteredTransactionObjectsPerCardAcceptor(filename, executedTransactions) {\r",
+							"    let fileJson = xml2Json(pm.collectionVariables.get(filename));\r",
+							"    let merchantsList = fileJson.batch.merchant;\r",
+							"\r",
+							"    //if we have a single merchant\r",
+							"    if (isJavascriptObject(merchantsList)) {\r",
+							"        merchantsList = [ merchantsList ];\r",
+							"    }\r",
+							"\r",
+							"    let transactionsPerCardAcceptor = {};\r",
+							"\r",
+							"    executedTransactions.forEach(executedTransaction => {\r",
+							"        let merchants = merchantsList.filter(merchant => merchant.cardAcceptor === executedTransaction.merchantCardAcceptor);\r",
+							"\r",
+							"        pm.expect(merchants.length).to.be.not.above(1);\r",
+							"\r",
+							"        if (merchants.length && typeof merchants[0].tr !== 'undefined') {\r",
+							"\r",
+							"            let merchantTransactions = merchants[0].tr;\r",
+							"            //if we have a single transaction\r",
+							"            if (isJavascriptObject(merchantTransactions)) {\r",
+							"                merchantTransactions = [ merchantTransactions ];\r",
+							"            }\r",
+							"\r",
+							"            let transaction = merchantTransactions.find(merchantTransaction => executedTransaction.clearResponseData === merchantTransaction.clearRespData);\r",
+							"\r",
+							"            if(typeof transaction !== 'undefined') {\r",
+							"                if (transactionsPerCardAcceptor.hasOwnProperty(executedTransaction.merchantCardAcceptor) == false) {\r",
+							"                    transactionsPerCardAcceptor[executedTransaction.merchantCardAcceptor] = [];\r",
+							"                }\r",
+							"\r",
+							"                transactionsPerCardAcceptor[executedTransaction.merchantCardAcceptor].push(transaction);\r",
+							"            }\r",
+							"        }\r",
+							"    });\r",
+							"\r",
+							"    return transactionsPerCardAcceptor;\r",
+							"}\r",
+							"\r",
+							"function buildXmlTelecollectFile(templateTelecollectXml, finalFilteredTelecollectDataObject, executedTransactions) {\r",
+							"    let finalJson = xml2Json(pm.variables.get(templateTelecollectXml));\r",
+							"\r",
+							"    let sixDigitBatchNumber = finalFilteredTelecollectDataObject.sourceXmlFile.match(/\\d+/)[0];\r",
+							"    pm.collectionVariables.set('telecollectFilename', `batch_${sixDigitBatchNumber}.xml`);\r",
+							"    pm.collectionVariables.set('sixDigitBatchNumber', sixDigitBatchNumber);\r",
+							"    pm.collectionVariables.set('transactionsCount', executedTransactions.length);\r",
+							"\r",
+							"    finalJson.batch.batchNumber = String(Number(sixDigitBatchNumber));\r",
+							"    finalJson.batch.numberTransactions = executedTransactions.length;\r",
+							"\r",
+							"    finalJson.batch.numberMerchants = Object.keys(finalFilteredTelecollectDataObject.transactionsPerCardAcceptor).length;\r",
+							"    delete finalJson.batch.merchant;\r",
+							"    finalJson.batch.merchant = [];\r",
+							"    \r",
+							"    Object.entries(finalFilteredTelecollectDataObject.transactionsPerCardAcceptor).forEach(entry => {\r",
+							"        let merchant = {};\r",
+							"        merchant.cardAcceptor = entry[0];\r",
+							"        merchant.numberTransactions = entry[1].length;\r",
+							"        merchant.tr = entry[1];\r",
+							"\r",
+							"        finalJson.batch.merchant.push(merchant);\r",
+							"    });\r",
+							"    \r",
+							"    const xml2js = require('xml2js');\r",
+							"    const CryptoJS = require('crypto-js');\r",
+							"\r",
+							"    let telecolletXml = new xml2js.Builder({ headless: true }).buildObject(finalJson);\r",
+							"    pm.collectionVariables.set('telecollectFileContent', telecolletXml);\r",
+							"    pm.collectionVariables.set('telecollectFileSha1', CryptoJS.SHA1(telecolletXml).toString());\r",
+							"\r",
+							"    return telecolletXml;\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Requested-With",
+						"value": "XMLHttpRequest",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Origin",
+						"value": "http://pc-dlv-ag1.int.rtblw.com:8080",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Referer",
+						"value": "http://pc-dlv-ag1.int.rtblw.com:8080/GWP/routing",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/javascript, */*; q=0.01",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://pc-dlv-ag1.int.rtblw.com:8080/GWP/routing",
+					"protocol": "http",
+					"host": [
+						"pc-dlv-ag1",
+						"int",
+						"rtblw",
+						"com"
+					],
+					"port": "8080",
+					"path": [
+						"GWP",
+						"routing"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6.1-Save the Telecollect XML in a file",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"The Test Server responded OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "filename",
+							"value": "{{telecollectFilename}}",
+							"type": "text"
+						},
+						{
+							"key": "content",
+							"value": "{{telecollectFileContent}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/saveAsFile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"saveAsFile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6.2-Get Remote machine username",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"The username used for the Remote machine connections is retrieved\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    pm.collectionVariables.set('remoteMachineUsername', pm.response.text());\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/username",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"username"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6.3-Copy Telecollect XML to Remote machine",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"The Test Server responded OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "host",
+							"value": "pc-dlv-batch2",
+							"type": "text"
+						},
+						{
+							"key": "filename",
+							"value": "{{telecollectFilename}}",
+							"type": "text"
+						},
+						{
+							"key": "destinationPath",
+							"value": "/home/{{remoteMachineUsername}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/secureCopyToRemote",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"secureCopyToRemote"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6.4-Send Telecollect XML from Remote machine to Telecollect machine",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"The Test Server responded OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "host",
+							"value": "pc-dlv-batch2",
+							"type": "text"
+						},
+						{
+							"key": "command",
+							"value": "scp -i /etc/rta/.ssh/id_rsa {{telecollectFilename}} tomcat8@pc-dlv-ag1:/mnt/space1/galitt/files",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/sshConnectAndExecute",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"sshConnectAndExecute"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7.1-Generate the Telecollect CBA2 files",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"let responseMessage = xml2Json(pm.response.text())['S:Envelope']['S:Body']['ns2:processRemittanceResponse']['return'];\r",
+							"\r",
+							"if(responseMessage == \"04 - Settlement file not found\") {\r",
+							"    postman.setNextRequest(pm.info.requestName);\r",
+							"\r",
+							"    console.log(\"Waiting for 10 seconds before next request.\");\r",
+							"    setTimeout(() => {console.log(\"Waiting done.\");}, 10 * 1000);\r",
+							"}\r",
+							"else {\r",
+							"    pm.test(\"The CB2A files are generated\", function () {\r",
+							"        pm.expect(responseMessage).to.eql(\"00 - OK\");\r",
+							"    });\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml;charset=UTF-8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ser=\"http://services.gwp.galitt.com/\">\r\n   <soapenv:Header/>\r\n   <soapenv:Body>\r\n      <ser:processRemittance>\r\n         <batchNumber>{{sixDigitBatchNumber}}</batchNumber>\r\n         <numberTransactions>{{transactionsCount}}</numberTransactions>\r\n         <crcRemittanceFile>{{telecollectFileSha1}}</crcRemittanceFile>\r\n         <clear>true</clear>\r\n      </ser:processRemittance>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://pc-dlv-ag1.int.rtblw.com:8080/GWP/BatchService",
+					"protocol": "http",
+					"host": [
+						"pc-dlv-ag1",
+						"int",
+						"rtblw",
+						"com"
+					],
+					"port": "8080",
+					"path": [
+						"GWP",
+						"BatchService"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7.2-Verify that the Telecollect CBA2 files are generated",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.code == 504) {\r",
+							"    postman.setNextRequest(pm.info.requestName);\r",
+							"}\r",
+							"else {\r",
+							"    pm.test(\"Status code is 200\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"    });\r",
+							"\r",
+							"    let sixDigitBatchNumber = pm.collectionVariables.get('sixDigitBatchNumber');\r",
+							"    let cb2aFilesInformation = getGeneratedFilesInformation(pm.response.text());\r",
+							"\r",
+							"    if(areCb2aFilesDisplayed(cb2aFilesInformation, sixDigitBatchNumber)) {\r",
+							"        pm.test(`The Telecollect complete CB2A files of batch ${sixDigitBatchNumber} have been generated`, function () {\r",
+							"            pm.expect(true).to.be.true;\r",
+							"        });\r",
+							"    }\r",
+							"    else {\r",
+							"        postman.setNextRequest(pm.info.requestName);\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"/*[{filename, date}]*/ function getGeneratedFilesInformation(/*String*/ generatedFilesPageHtml) {\r",
+							"    let generatedFilesInformation = [];\r",
+							"\r",
+							"    let cheerio = require(\"cheerio\");\r",
+							"    let $ = cheerio.load(generatedFilesPageHtml);\r",
+							"    \r",
+							"    let trElements = $(\"tr\");\r",
+							"    trElements.splice(0, 1);  // remove the first row which is empty.\r",
+							"    trElements.splice(-1, 1);  // remove the last row containing the summary of the results display.\r",
+							"\r",
+							"    trElements.each(function (index, tr) {\r",
+							"        let tdElements = $(tr).find(\"td\");\r",
+							"        generatedFilesInformation.push({\"filename\" : tdElements.eq(0).text(), \"date\" : tdElements.eq(1).text()});\r",
+							"    });\r",
+							"\r",
+							"    return generatedFilesInformation;\r",
+							"}\r",
+							"\r",
+							"/*[{filename, date}]*/ function areCb2aFilesDisplayed(/*[{filename, date}]*/ generatedFilesInformation, /*String*/ sixDigitBatchNumber) {\r",
+							"    let isCb2aBinaryDisplayed = false;\r",
+							"    let isCb2aTextDisplayed = false;\r",
+							"\r",
+							"    generatedFilesInformation.forEach(function(fileInformation) {\r",
+							"        if(fileInformation.filename === `filecb2a-${sixDigitBatchNumber}-000001`) {\r",
+							"            isCb2aBinaryDisplayed = true;\r",
+							"        } else if(fileInformation.filename === `filecb2a-${sixDigitBatchNumber}-000001.txt`) {\r",
+							"            isCb2aTextDisplayed = true;\r",
+							"        }\r",
+							"    })\r",
+							"\r",
+							"    return isCb2aBinaryDisplayed && isCb2aTextDisplayed;\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{TOOLKIT}}/files/generated-files/index?id=10002&sort=date-",
+					"host": [
+						"{{TOOLKIT}}"
+					],
+					"path": [
+						"files",
+						"generated-files",
+						"index"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "10002"
+						},
+						{
+							"key": "sort",
+							"value": "date-"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8.1-Send Telecollect CB2A binary from Telecollect machine to Remote machine",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"The Test Server responded OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "host",
+							"value": "pc-dlv-batch2",
+							"type": "text"
+						},
+						{
+							"key": "command",
+							"value": "scp -i /etc/rta/.ssh/id_rsa tomcat8@pc-dlv-ag1:/mnt/space1/galitt/files/filecb2a-{{sixDigitBatchNumber}}-000001 .",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/sshConnectAndExecute",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"sshConnectAndExecute"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8.2-Send Telecollect CB2A text from Telecollect machine to Remote machine",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"The Test Server responded OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "host",
+							"value": "pc-dlv-batch2",
+							"type": "text"
+						},
+						{
+							"key": "command",
+							"value": "scp -i /etc/rta/.ssh/id_rsa tomcat8@pc-dlv-ag1:/mnt/space1/galitt/files/filecb2a-{{sixDigitBatchNumber}}-000001.txt .",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/sshConnectAndExecute",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"sshConnectAndExecute"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8.3-Copy Telecollect CBA2 binary from Remote machine",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"The Test Server responded OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "host",
+							"value": "pc-dlv-batch2",
+							"type": "text"
+						},
+						{
+							"key": "filename",
+							"value": "filecb2a-{{sixDigitBatchNumber}}-000001",
+							"type": "text"
+						},
+						{
+							"key": "sourcePath",
+							"value": "/home/{{remoteMachineUsername}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/secureCopyFromRemote",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"secureCopyFromRemote"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8.4-Copy Telecollect CBA2 text from Remote machine",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"The Test Server responded OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "host",
+							"value": "pc-dlv-batch2",
+							"type": "text"
+						},
+						{
+							"key": "filename",
+							"value": "filecb2a-{{sixDigitBatchNumber}}-000001.txt",
+							"type": "text"
+						},
+						{
+							"key": "sourcePath",
+							"value": "/home/{{remoteMachineUsername}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/secureCopyFromRemote",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"secureCopyFromRemote"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9-Save the Transactions summary",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let executedTransactions = JSON.parse(pm.collectionVariables.get(\"transactions\"));\r",
+							"\r",
+							"executedTransactions.forEach(function(transaction) {\r",
+							"    delete transaction.clearResponseData;\r",
+							"    transaction.dateAndTime = transaction.dateAndTime.replace(/[,]/g, '')\r",
+							"});\r",
+							"\r",
+							"let summaryContent = JSON.stringify(executedTransactions, null, 2).replace(/[[{\",}\\]]/g, '');\r",
+							"\r",
+							"pm.request.body.urlencoded.upsert({key : \"content\", value : summaryContent});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"The Test Server responded OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "filename",
+							"value": "Transactions summary ({{sixDigitBatchNumber}}).txt",
+							"type": "text"
+						},
+						{
+							"key": "content",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/saveAsFile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"saveAsFile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10-Parse CB2A text file",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"eval(pm.collectionVariables.get(\"TestHelper\"));\r",
+							"\r",
+							"let cb2aData = getParsedDataByTypeFromCb2aText(pm.response.text());\r",
+							"let cb2aFileTransactions = getCb2aFileTransactions(cb2aData);\r",
+							"let executedTransactions = JSON.parse(pm.collectionVariables.get(\"transactions\"));\r",
+							"\r",
+							"console.log(\"Executed transactions :\");\r",
+							"console.log(executedTransactions)\r",
+							"console.log(\"CB2A FILE :\");\r",
+							"console.log(cb2aFileTransactions)\r",
+							"\r",
+							"executedTransactions.forEach(executedTransaction => {\r",
+							"    let cba2FileTransaction = cb2aFileTransactions.find(cb2aFileTransaction => cb2aFileTransaction.transactionId === executedTransaction.transactionId);\r",
+							"\r",
+							"    pm.test(\"Check CB2A File : Field 3 - Processing Code\", function () {\r",
+							"        let descriptionDeLaTransaction = cba2FileTransaction['3'].substring(0, 2);\r",
+							"        let typeDeCompteAffecteAuDebit = cba2FileTransaction['3'].substring(2, 4);\r",
+							"        let typeDeCompteAffecteAuCredit = cba2FileTransaction['3'].substring(4, 6);\r",
+							"\r",
+							"        if (executedTransaction.operationType === \"PAYMENT\") {\r",
+							"            if (executedTransaction.tags.includes(\"CRYPTO\")) {\r",
+							"                pm.expect(descriptionDeLaTransaction).to.be.equal(\"11\");\r",
+							"            }\r",
+							"            else {\r",
+							"                pm.expect(descriptionDeLaTransaction).to.be.equal(\"00\");\r",
+							"            }\r",
+							"        }\r",
+							"\r",
+							"        pm.expect(typeDeCompteAffecteAuDebit).to.be.equal(\"00\");\r",
+							"        pm.expect(typeDeCompteAffecteAuCredit).to.be.equal(\"00\");\r",
+							"    });\r",
+							"\r",
+							"    pm.test(\"Check CB2A File : Contract Field 18 - Merchant Category Code\", function () {\r",
+							"        if (executedTransaction.tags.includes(\"CRYPTO\")) {\r",
+							"            pm.expect(cba2FileTransaction['18']).to.be.equal(\"6051\");\r",
+							"        }\r",
+							"        else if (executedTransaction.tags.includes(\"PAYFAC\")) {\r",
+							"            pm.expect(cba2FileTransaction['18']).to.be.equal(executedTransaction.submerchantCategoryCode);\r",
+							"        }\r",
+							"        else {\r",
+							"            pm.expect(cba2FileTransaction['18']).to.be.equal(executedTransaction.merchantCategoryCode);\r",
+							"        }\r",
+							"    });\r",
+							"\r",
+							"    516650\r",
+							"    pm.test(\"Check CB2A File : Field 22 - Condition de réalisation de la transaction au point de vente\", function () {\r",
+							"        let environnementDEmission = cba2FileTransaction['22'].charAt(0);\r",
+							"        let presenceDuPorteur = cba2FileTransaction['22'].charAt(1);\r",
+							"        let modeDeLectureDeLaCarte = cba2FileTransaction['22'].charAt(2);\r",
+							"        let methodeAuthentificationDuPorteur = cba2FileTransaction['22'].charAt(3);\r",
+							"        let SystemeAuthentifiantLePorteur = cba2FileTransaction['22'].charAt(4);\r",
+							"        let EtatDesMoyensDaffichageImpressionDesMessages = cba2FileTransaction['22'].charAt(5);\r",
+							"\r",
+							"        pm.expect(environnementDEmission).to.be.equal('5'); //Chez le porteur, sans surveillance\r",
+							"\r",
+							"        if (executedTransaction.tags.includes(\"MOTO\")) {\r",
+							"            pm.expect(presenceDuPorteur === '2' || presenceDuPorteur === '3').to.be.true;\r",
+							"        }\r",
+							"        else {\r",
+							"            pm.expect(presenceDuPorteur).to.be.equal('1');\r",
+							"        }\r",
+							"\r",
+							"        if (executedTransaction.tags.includes(\"CARD_ON_FILE_CREATION\") || executedTransaction.tags.includes(\"CARD_ON_FILE_USE\")) {\r",
+							"            pm.expect(modeDeLectureDeLaCarte).to.be.equal('9');\r",
+							"        }\r",
+							"        else {\r",
+							"            pm.expect(modeDeLectureDeLaCarte).to.be.equal('6');\r",
+							"        }\r",
+							"\r",
+							"        if (executedTransaction.tags.includes(\"3DS\")) {\r",
+							"            pm.expect(methodeAuthentificationDuPorteur === '1' || methodeAuthentificationDuPorteur === '6').to.be.true;\r",
+							"            pm.expect(SystemeAuthentifiantLePorteur).to.be.equal('5');\r",
+							"        }\r",
+							"        else {\r",
+							"            pm.expect(methodeAuthentificationDuPorteur).to.be.equal('0');\r",
+							"            pm.expect(SystemeAuthentifiantLePorteur).to.be.equal('0');\r",
+							"        }\r",
+							"\r",
+							"        pm.expect(EtatDesMoyensDaffichageImpressionDesMessages).to.be.equal('0');\r",
+							"    });\r",
+							"\r",
+							"    pm.test(\"Check CB2A File : Field 43 - Nom et adresse de l’accepteur de carte\", function () {\r",
+							"        if (executedTransaction.tags.includes(\"PAYFAC\")) {\r",
+							"            let desciptorPrefix = executedTransaction.descriptorPrefix;\r",
+							"            let descriptorSuffix = executedTransaction.submerchantDescriptor;\r",
+							"            let city = executedTransaction.submerchantCity;\r",
+							"            let zipCode = executedTransaction.submerchantZipCode;\r",
+							"            let country = executedTransaction.submerchantCountry;\r",
+							"            let spacePadding = '';\r",
+							"\r",
+							"            let dynamicDescriptor = desciptorPrefix + '*' + descriptorSuffix + '\\\\' + city + '\\\\' + zipCode + spacePadding + country;\r",
+							"\r",
+							"            if (dynamicDescriptor.length < 40) {\r",
+							"                spacePadding = spacePadding.padStart(40 - dynamicDescriptor.length, ' ');\r",
+							"                dynamicDescriptor = desciptorPrefix + '*' + descriptorSuffix + '\\\\' + city + '\\\\' + zipCode + spacePadding + country;\r",
+							"            }\r",
+							"            else if (dynamicDescriptor.length > 40) {\r",
+							"                city = city.substring(0, city.length - (dynamicDescriptor.length - 40));\r",
+							"                dynamicDescriptor = desciptorPrefix + '*' + descriptorSuffix + '\\\\' + city + '\\\\' + zipCode + spacePadding + country;\r",
+							"\r",
+							"                if (dynamicDescriptor.length > 40) {\r",
+							"                    let descriptor = desciptorPrefix + '*' + descriptorSuffix;\r",
+							"                    descriptor = descriptor.substring(0, descriptor.length - (dynamicDescriptor.length - 40));\r",
+							"                    dynamicDescriptor = descriptor + '\\\\' + city + '\\\\' + zipCode + spacePadding + country;\r",
+							"                }\r",
+							"            }\r",
+							"\r",
+							"            pm.expect(cba2FileTransaction['43']).to.be.equal(dynamicDescriptor);\r",
+							"        }\r",
+							"    });\r",
+							"\r",
+							"    pm.test(\"Check CB2A File : Contract Field 46.DF5D - SIRET\", function () {\r",
+							"        if (executedTransaction.tags.includes(\"PAYFAC\")) {\r",
+							"            pm.expect(hexadecimalToText(cba2FileTransaction['46']['DF5D'])).to.be.equal(executedTransaction.submerchantSiret);\r",
+							"        }\r",
+							"        else {\r",
+							"            pm.expect(hexadecimalToText(cba2FileTransaction['46']['DF5D'])).to.be.equal(executedTransaction.siret);\r",
+							"        }\r",
+							"    });\r",
+							"\r",
+							"    pm.test(\"Check CB2A File : Contract Field 46.DF5F - Acceptor Contract Number\", function () {\r",
+							"        pm.expect(hexadecimalToText(cba2FileTransaction['46']['DF5F'])).to.be.equal(executedTransaction.accountContractNumber);\r",
+							"    });\r",
+							"\r",
+							"    pm.test(\"Check CB2A File : Field 47.02 - Technical/Regulatory Environment = Open Networks\", function () {\r",
+							"        pm.expect(cba2FileTransaction['47']['02']).to.be.equal(\"24\");\r",
+							"    });\r",
+							"\r",
+							"    pm.test(\"Check CB2A File : Field 47.03 - Procedure/Invoice Type = 0\", function () {\r",
+							"        if (executedTransaction.tags.includes(\"CRYPTO\")) {\r",
+							"            pm.expect(cba2FileTransaction['47']['03']).to.be.equal(\"0\");\r",
+							"        }\r",
+							"    });\r",
+							"\r",
+							"    pm.test(\"Check CB2A File : Field 47.18 - Code pays du système d’acceptation\", function () {\r",
+							"        if (executedTransaction.tags.includes(\"PAYFAC\")) {\r",
+							"            pm.expect(cba2FileTransaction['47']['18']).to.be.equal(executedTransaction.acceptorSystemCountryCode);\r",
+							"        }\r",
+							"        else {\r",
+							"            pm.expect(cba2FileTransaction['47']['18']).to.be.equal(\"250\"); //the acceptor system is Payplug, located in France\r",
+							"        }\r",
+							"    });\r",
+							"\r",
+							"    pm.test(\"Check CB2A File : Field 47.48 - Type d'application du système d’acceptation (TASA)\", function () {\r",
+							"        pm.expect(cba2FileTransaction['47']['48']).to.be.equal(\"A0000000420024\");\r",
+							"    });\r",
+							"\r",
+							"    pm.test(\"Check CB2A File : Contract Field 47.95 - Référence unique de transaction\", function () {\r",
+							"        pm.expect(cba2FileTransaction['47']['95']).to.be.equal(executedTransaction.uniqueRefID);\r",
+							"    });\r",
+							"\r",
+							"    pm.test(\"Check CB2A File : Field 57.FF01 - localisation du commerçant\", function () {\r",
+							"        if (executedTransaction.tags.includes(\"PAYFAC\")) {\r",
+							"            pm.expect(hexadecimalToText(cba2FileTransaction['57']['FF01'])).to.be.equal(executedTransaction.submerchantCity + '\\\\' + executedTransaction.submerchantZipCode);\r",
+							"        }\r",
+							"    });\r",
+							"\r",
+							"    pm.test(\"Check CB2A File : Field 57.FF02 - libellé de l'enseigne commerciale\", function () {\r",
+							"        if (executedTransaction.tags.includes(\"PAYFAC\")) {\r",
+							"            let desciptorPrefix = executedTransaction.descriptorPrefix;\r",
+							"            let descriptorSuffix = executedTransaction.submerchantDescriptor;\r",
+							"\r",
+							"            let descriptorName = desciptorPrefix + '*' + descriptorSuffix;\r",
+							"\r",
+							"            if (descriptorName.length > 32) {\r",
+							"                descriptorName = descriptorName.substring(0, 32);\r",
+							"            }\r",
+							"\r",
+							"            pm.expect(hexadecimalToText(cba2FileTransaction['57']['FF02'])).to.be.equal(descriptorName);\r",
+							"        }\r",
+							"    });\r",
+							"\r",
+							"    pm.test(\"Check CB2A File : Contract Field 58.0412 - Nomenclature + Authentification porteur\", function () {\r",
+							"        if(executedTransaction.selectedBrand.toLowerCase() === \"cb\") {\r",
+							"             pm.expect(hexadecimalToText(cba2FileTransaction['58']['0412'].substring(2, 4))).to.be.equal('0');\r",
+							"        }\r",
+							"\r",
+							"        if (executedTransaction.tags.includes(\"3DS\")) {\r",
+							"            pm.expect(hexadecimalToText(cba2FileTransaction['58']['0412'].substring(4, 6))).to.be.equal('Y');\r",
+							"        }\r",
+							"    });\r",
+							"\r",
+							"    pm.test(\"Check CB2A File : Contract Field 58.0419 - Type d’authentification 3DS + Souhait commerçant pour l’authentification\", function () {\r",
+							"        if(executedTransaction.threeDSecurePreference === \"SCA\") {\r",
+							"             pm.expect(hexadecimalToText(cba2FileTransaction['58']['0419'].substring(2, 6))).to.be.equal(\"CH\");\r",
+							"        }\r",
+							"        else if(executedTransaction.threeDSecurePreference === \"FRICTIONLESS\") {\r",
+							"            pm.expect(hexadecimalToText(cba2FileTransaction['58']['0419'].substring(2, 6))).to.be.equal(\"FR\");\r",
+							"        }\r",
+							"\r",
+							"        if (executedTransaction.threeDSecurePreference === \"NOPREF\") {\r",
+							"            pm.expect(cba2FileTransaction['58']['0419'].substring(6, 8)).to.be.equal(\"01\");\r",
+							"        }\r",
+							"        else if (executedTransaction.threeDSecurePreference === \"FRICTIONLESS\") {\r",
+							"            pm.expect(cba2FileTransaction['58']['0419'].substring(6, 8)).to.be.equal(\"02\");\r",
+							"        }\r",
+							"        else if (executedTransaction.threeDSecurePreference === \"SCA\") {\r",
+							"            pm.expect(cba2FileTransaction['58']['0419'].substring(6, 8)).to.be.equal(\"03\");\r",
+							"        }\r",
+							"        else if (executedTransaction.threeDSecurePreference === \"SCAMANDATE\") {\r",
+							"            pm.expect(cba2FileTransaction['58']['0419'].substring(6, 8)).to.be.equal(\"04\");\r",
+							"        }\r",
+							"    });\r",
+							"\r",
+							"    pm.test(\"Check CB2A File : Contract Field 58.FF47 - TYPE DE SECURISATION DE TRANSACTION DE COMMERCE ELECTRONIQUE\", function () {\r",
+							"        if(executedTransaction.tags.includes(\"3DS\")) {\r",
+							"            pm.expect(cba2FileTransaction['58']['FF47'].substring(2, 4)).to.be.equal(\"20\");\r",
+							"        }\r",
+							"        else {\r",
+							"            pm.expect(cba2FileTransaction['58']['FF47'].substring(2, 4)).to.be.equal(\"08\");\r",
+							"        }\r",
+							"    });\r",
+							"\r",
+							"    pm.test(\"Check CB2A File : Contract Field 59.0003 - MARQUE CHOISIE\", function () {\r",
+							"        let expectedValue = null;\r",
+							"        switch (executedTransaction.selectedBrand) {\r",
+							"            case 'cb':\r",
+							"                expectedValue = \"00\"\r",
+							"                break;\r",
+							"            case 'visa':\r",
+							"                expectedValue = \"01\"\r",
+							"                break;\r",
+							"            case 'mastercard':\r",
+							"                expectedValue = \"04\"\r",
+							"                break;\r",
+							"            case 'amex':\r",
+							"                expectedValue = \"09\"\r",
+							"                break;\r",
+							"            default :\r",
+							"                throw new Error('SELECTEDBRAND is not known');\r",
+							"        }\r",
+							"\r",
+							"        pm.expect(cba2FileTransaction['59']['0003'].substring(2, 4)).to.be.equal(expectedValue);\r",
+							"    });\r",
+							"\r",
+							"    pm.test(\"Check CB2A File : Contract Field 59.0004 - COMPLÉMENT D’ADRESSE\", function () {\r",
+							"        if (executedTransaction.tags.includes(\"PAYFAC\")) {\r",
+							"            pm.expect(hexadecimalToText(cba2FileTransaction['59']['0004']).trim()).to.be.equal(executedTransaction.submerchantStreet);\r",
+							"        }\r",
+							"    });\r",
+							"\r",
+							"    pm.test(\"Check CB2A File : Contract Field 59.0022 - VERSION MAJEURE DU PROTOCOLE 3DS\", function () {\r",
+							"        if(executedTransaction.tags.includes(\"3DS\")) {\r",
+							"            pm.expect(hexadecimalToText(cba2FileTransaction['59']['0022'])).to.be.equal('2');\r",
+							"        }\r",
+							"    });\r",
+							"\r",
+							"    pm.test(\"Check CB2A File : Contract Field 59.0025 - IDENTIFIANT DU FACILITATEUR DE PAIEMENT\", function () {\r",
+							"        if (executedTransaction.tags.includes(\"PAYFAC\")) {\r",
+							"            pm.expect(hexadecimalToText(cba2FileTransaction['59']['0025']).trim()).to.be.equal(executedTransaction.paymentFacilitatorId);\r",
+							"        }\r",
+							"    });\r",
+							"\r",
+							"    pm.test(\"Check CB2A File : Contract Field 59.0027 - IDENTIFIANT DU COMMERÇANT FINAL\", function () {\r",
+							"        if (executedTransaction.tags.includes(\"PAYFAC\")) {\r",
+							"            pm.expect(hexadecimalToText(cba2FileTransaction['59']['0027']).trim()).to.be.equal(executedTransaction.submerchantExternalId);\r",
+							"        }\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"\r",
+							"function getParsedDataByTypeFromCb2aText(cba2Text) {\r",
+							"    //reformat CB2A text lines into JSON strings, that can be parsed into Objects\r",
+							"    let jsonFormatCba2Entries = []\r",
+							"    cba2Text.replaceAll('\\\\', \"\\\\\\\\\").replaceAll('{', \":{\").replaceAll('(', '{').replaceAll(\", )\", '}').replaceAll('=', ':').replaceAll('\\'', '\\\"').split('\\n').forEach(line => {\r",
+							"        if (line) {\r",
+							"            line = line.replace(/{([a-zA-Z]+)\\s*:/g, '{\"$1\":');\r",
+							"            line = line.replace(/([a-zA-Z]+)\\s*:{/g, '\"$1\":{');\r",
+							"            line = line.replace(/(\\d+)\\s*:\"/g, '\"$1\":\"');\r",
+							"            jsonFormatCba2Entries.push('{' + line + '}');\r",
+							"        }\r",
+							"    });\r",
+							"\r",
+							"    //Parse the CB2A lines of the desired type, from JSON strings into Objects\r",
+							"    let cb2aData = [];\r",
+							"    let cb2aEntriesblock = {};\r",
+							"\r",
+							"    jsonFormatCba2Entries.forEach(jsonFormatCba2Entry => {\r",
+							"        let entry = JSON.parse(jsonFormatCba2Entry);\r",
+							"\r",
+							"        if (entry.IsoMessage.type != 246 && entry.IsoMessage.type != 146 && Object.keys(cb2aEntriesblock).length) {\r",
+							"            cb2aData.push(cb2aEntriesblock);\r",
+							"            cb2aEntriesblock = {};\r",
+							"        }\r",
+							"\r",
+							"        if (entry.IsoMessage.type == 346) { //Contract\r",
+							"            cb2aEntriesblock.contract = replaceSubFieldsWithObjects(entry.IsoMessage.fields);\r",
+							"            cb2aEntriesblock.transactions = [];\r",
+							"        }\r",
+							"        else if (entry.IsoMessage.type == 246 || entry.IsoMessage.type == 146) { //transaction\r",
+							"            cb2aEntriesblock.transactions.push(replaceSubFieldsWithObjects(entry.IsoMessage.fields));\r",
+							"        }\r",
+							"    });\r",
+							"\r",
+							"    return cb2aData;\r",
+							"}\r",
+							"\r",
+							"function replaceSubFieldsWithObjects(entryFields) {\r",
+							"    let cb2aEntryFields = getDeepCopyOfObject(entryFields);\r",
+							"    let keys = Object.keys(cb2aEntryFields);\r",
+							"\r",
+							"    keys.forEach(key => {\r",
+							"        if (cb2aEntryFields[key].includes(':') && cb2aEntryFields[key].includes(' ')) {\r",
+							"            let transactionCompositeField = {};\r",
+							"\r",
+							"            let subFieldsKeyValuePairs = cb2aEntryFields[key].split(' ');\r",
+							"\r",
+							"            subFieldsKeyValuePairs.forEach(keyValuePair => {\r",
+							"                let keyAndValue = keyValuePair.split(':');\r",
+							"\r",
+							"                transactionCompositeField[keyAndValue[0]] = keyAndValue[1];\r",
+							"            });\r",
+							"\r",
+							"            cb2aEntryFields[key] = transactionCompositeField;\r",
+							"        }\r",
+							"    });\r",
+							"\r",
+							"    return cb2aEntryFields;\r",
+							"}\r",
+							"\r",
+							"/*function getExecutedTransactionsAuthorizationCodes() {\r",
+							"    const executedTransactions = JSON.parse(pm.collectionVariables.get(\"transactions\"));\r",
+							"\r",
+							"    let executedTransactionsAuthorizationCodes = [];\r",
+							"    executedTransactions.forEach(transaction => executedTransactionsAuthorizationCodes.push(transaction.authorizationCode));\r",
+							"\r",
+							"    return executedTransactionsAuthorizationCodes;\r",
+							"}*/\r",
+							"\r",
+							"function mergeCB2AObjects(object1, object2) { //this function is not generic, as it only works for 1 level of nested objects\r",
+							"    let finalObject = {};\r",
+							"\r",
+							"    for (const [key, value] of Object.entries(object1)) {\r",
+							"        if (object2.hasOwnProperty(key)) {\r",
+							"            if (isJavascriptObject(value)) {\r",
+							"                finalObject[key] = { ...object1[key], ...object2[key] };\r",
+							"            }\r",
+							"            else if (Array.isArray(value)) {\r",
+							"                finalObject[key] = object1[key].concat(object2[key]);\r",
+							"            }\r",
+							"            else {\r",
+							"                finalObject[key] = object2[key];\r",
+							"            }\r",
+							"        }\r",
+							"        else {\r",
+							"            finalObject[key] = value;\r",
+							"        }\r",
+							"    }\r",
+							"\r",
+							"    for (const [key, value] of Object.entries(object2)) {\r",
+							"        if (object1.hasOwnProperty(key) == false) {\r",
+							"            finalObject[key] = value;\r",
+							"        }\r",
+							"    }\r",
+							"\r",
+							"    return finalObject;\r",
+							"}\r",
+							"\r",
+							"function getCb2aFileTransactions(cb2aData) {\r",
+							"    let cb2aFileTransactions = [];\r",
+							"\r",
+							"    cb2aData.forEach(cb2aDatum => {\r",
+							"        cb2aDatum.transactions.forEach(transaction => {\r",
+							"            let cb2aFileTransaction = mergeCB2AObjects(getDeepCopyOfObject(transaction), cb2aDatum.contract);\r",
+							"            cb2aFileTransaction.transactionId = cb2aFileTransaction['37'].replaceAll(' ', '');\r",
+							"\r",
+							"            let firstNumber = cb2aFileTransaction.transactionId.charAt(0);\r",
+							"            if (firstNumber === '1') {\r",
+							"                cb2aFileTransaction.transactionId = 'A' + cb2aFileTransaction.transactionId.substring(1);\r",
+							"            }\r",
+							"            else if (firstNumber === '2') {\r",
+							"                cb2aFileTransaction.transactionId = 'B' + cb2aFileTransaction.transactionId.substring(1);\r",
+							"            }\r",
+							"\r",
+							"            cb2aFileTransactions.push(cb2aFileTransaction);\r",
+							"        });\r",
+							"    });\r",
+							"\r",
+							"    return cb2aFileTransactions;\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/fileContent?filename=filecb2a-{{sixDigitBatchNumber}}-000001.txt",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"fileContent"
+					],
+					"query": [
+						{
+							"key": "filename",
+							"value": "filecb2a-{{sixDigitBatchNumber}}-000001.txt"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "11-Cleanup files from Telecollect Machine",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let filesToDelete = JSON.parse(pm.collectionVariables.get(\"filesToDelete\"));\r",
+							"\r",
+							"let currentlyDeletedFile = filesToDelete[0];\r",
+							"\r",
+							"pm.collectionVariables.set(\"currentlyDeletedFile\", currentlyDeletedFile)\r",
+							"\r",
+							"if(currentlyDeletedFile.includes(\"xml\")) {\r",
+							"    pm.collectionVariables.set(\"deletionId\", 1);\r",
+							"}\r",
+							"else if (currentlyDeletedFile.includes(\"filecb2a\")) {\r",
+							"    pm.collectionVariables.set(\"deletionId\", 10002);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(`File deletion requested : ${pm.collectionVariables.get('currentlyDeletedFile')}`, function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"let filesToDelete = JSON.parse(pm.collectionVariables.get('filesToDelete'));\r",
+							"\r",
+							"filesToDelete.splice(0, 1);\r",
+							"   \r",
+							"pm.collectionVariables.set('filesToDelete', JSON.stringify(filesToDelete));\r",
+							"\r",
+							"if(filesToDelete.length) {\r",
+							"    postman.setNextRequest(pm.info.requestName);\r",
+							"}\r",
+							"else {\r",
+							"    //removeGeneratedCollectionVariables();\r",
+							"    postman.setNextRequest(null);\r",
+							"}\r",
+							"\r",
+							"function removeGeneratedCollectionVariables() {\r",
+							"    let xmlFilesToParse = JSON.parse(pm.collectionVariables.get('xmlFilesToParse'));\r",
+							"    xmlFilesToParse.forEach(downloadeFilename => pm.collectionVariables.unset(downloadeFilename));\r",
+							"\r",
+							"    pm.collectionVariables.unset(\"transactions\");\r",
+							"    pm.collectionVariables.unset(\"xmlFilesToDownload\");\r",
+							"    pm.collectionVariables.unset(\"xmlFilesToParse\");\r",
+							"    pm.collectionVariables.unset(\"hash\");\r",
+							"    pm.collectionVariables.unset(\"transactionId\");\r",
+							"    pm.collectionVariables.unset(\"pan\");\r",
+							"    pm.collectionVariables.unset(\"nextRequest\");\r",
+							"    pm.collectionVariables.unset(\"eventId\");\r",
+							"    pm.collectionVariables.unset(\"lastTransactionTimestamp\");\r",
+							"    pm.collectionVariables.unset(\"currentlyDownloadedFile\");\r",
+							"    pm.collectionVariables.unset(\"telecollectFilename\");\r",
+							"    pm.collectionVariables.unset(\"telecollectFileContent\");\r",
+							"    pm.collectionVariables.unset(\"telecollectFileSha1\");\r",
+							"    pm.collectionVariables.unset(\"sixDigitBatchNumber\");\r",
+							"    pm.collectionVariables.unset(\"transactionsCount\");\r",
+							"    pm.collectionVariables.unset(\"telecollectFileContent\");\r",
+							"    pm.collectionVariables.unset(\"filesToDelete\");\r",
+							"    pm.collectionVariables.unset(\"currentlyDeletedFile\");\r",
+							"    pm.collectionVariables.unset(\"deletionId\");\r",
+							"    pm.collectionVariables.unset(\"remoteMachineUsername\");\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{TOOLKIT}}/files/generated-files/delete?file_name={{currentlyDeletedFile}}&id={{deletionId}}",
+					"host": [
+						"{{TOOLKIT}}"
+					],
+					"path": [
+						"files",
+						"generated-files",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "file_name",
+							"value": "{{currentlyDeletedFile}}"
+						},
+						{
+							"key": "id",
+							"value": "{{deletionId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send preprare authenticate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"HTTP response code is 201 with content\", () => {",
+							"    pm.response.to.have.status(201);",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('text/html;charset=UTF-8');",
+							"});",
+							"",
+							"const prepareAuthenticationRedirectionUrls = parseNotificationCheckerScriptUrls(pm.response.text());",
+							"pm.test('Prepare authentication service redirects to browser_data', () => {",
+							"    pm.expect(prepareAuthenticationRedirectionUrls.notificationCheckUrl).to.contain(pm.collectionVariables.replaceIn(\"/threedsecure-front/v2/transactions/{{redirectionTransactionId}}/method_notification\"));",
+							"    pm.expect(prepareAuthenticationRedirectionUrls.redirectionUrl).to.contain(pm.collectionVariables.replaceIn(\"/threedsecure-front/v2/transactions/{{redirectionTransactionId}}/browser_data\"));",
+							"});",
+							"",
+							"function parseNotificationCheckerScriptUrls(redirectHtml) {",
+							"    const chtml = cheerio(redirectHtml);",
+							"    const redirectData = {};",
+							"    chtml.find('body script').each((index, item) => {",
+							"        const scriptContent = item.children[0].data;",
+							"        const notificationCheckerVar = scriptContent.match(/var\\s+([^\\s]+)\\s*=\\s*new\\s+NotificationChecker/);",
+							"        if (notificationCheckerVar) {",
+							"            const notificationCheckUrlMatch = scriptContent.match(notificationCheckerVar[1] + \"\\\\.\" + \"notificationCheckUrl[^=]*=[^\\\"]*\\\"([^\\\"]+)\\\"\");",
+							"            const redirectionUrlMatch = scriptContent.match(notificationCheckerVar[1] + \"\\\\.\" + \"redirectionUrl[^=]*=[^\\\"]*\\\"([^\\\"]+)\\\"\");",
+							"            redirectData.notificationCheckUrl = notificationCheckUrlMatch && notificationCheckUrlMatch[1];",
+							"            redirectData.redirectionUrl = redirectionUrlMatch && redirectionUrlMatch[1];",
+							"        }",
+							"    });",
+							"    return redirectData;",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/plain",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "transaction_id",
+							"value": "{{redirectionTransactionId}}",
+							"type": "text"
+						},
+						{
+							"key": "transaction_public_id",
+							"value": "{{publicTransactionId}}",
+							"type": "text"
+						},
+						{
+							"key": "card_network",
+							"value": "{{redirectionCardNetwork}}",
+							"type": "text"
+						},
+						{
+							"key": "target",
+							"value": "{{redirectionTarget}}",
+							"type": "text"
+						},
+						{
+							"key": "method_url",
+							"value": "{{redirectionMethodUrl}}",
+							"type": "text"
+						},
+						{
+							"key": "method_data",
+							"value": "{{redirectionMethodData}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{3DS_FRONT}}/threedsecure-front/v2/transactions/{{redirectionTransactionId}}/prepare_authentication",
+					"host": [
+						"{{3DS_FRONT}}"
+					],
+					"path": [
+						"threedsecure-front",
+						"v2",
+						"transactions",
+						"{{redirectionTransactionId}}",
+						"prepare_authentication"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send authenticate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"eval(pm.collectionVariables.get(\"TestHelper\"));",
+							"",
+							"pm.test(\"HTTP response code indicates success\", () => {",
+							"    pm.expect(pm.response.code == 200 || pm.response.code == 201).to.be.true;",
+							"});",
+							"",
+							"const acsFormData = parseRedirectionHtml(pm.response.text());",
+							"",
+							"if (Object.keys(acsFormData).length == 0) {",
+							"    postman.setNextRequest(\"Check execcode\");",
+							"}",
+							"else {",
+							"    pm.test('Authenticate returns redirection to ACS form with creq field', () => {",
+							"        pm.expect(acsFormData).to.have.property('creq');",
+							"    });",
+							"",
+							"    const decodedCReq = JSON.parse(getDecodedString_Base64(acsFormData.creq));",
+							"",
+							"    pm.test('Authenticate returns creq fields', () => {",
+							"        pm.expect(decodedCReq.messageType).to.eql('CReq');",
+							"        pm.expect(decodedCReq.threeDSServerTransID).to.eql(pm.collectionVariables.get(\"redirectionTransactionId\"));",
+							"    });",
+							"",
+							"    pm.collectionVariables.set(\"acsTransID\", decodedCReq.acsTransID);",
+							"    pm.collectionVariables.set(\"messageVersion\", decodedCReq.messageVersion);",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/plain",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "browser_language",
+							"value": "fr",
+							"type": "text"
+						},
+						{
+							"key": "browser_screen_width",
+							"value": "800",
+							"type": "text"
+						},
+						{
+							"key": "browser_screen_height",
+							"value": "600",
+							"type": "text"
+						},
+						{
+							"key": "browser_color_depth",
+							"value": "24",
+							"type": "text"
+						},
+						{
+							"key": "browser_timezone",
+							"value": "-120",
+							"type": "text"
+						},
+						{
+							"key": "browser_java_enabled",
+							"value": "",
+							"type": "default"
+						},
+						{
+							"key": "timeout",
+							"value": "false",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{3DS_FRONT}}/threedsecure-front/v2/transactions/{{redirectionTransactionId}}/authenticate",
+					"host": [
+						"{{3DS_FRONT}}"
+					],
+					"path": [
+						"threedsecure-front",
+						"v2",
+						"transactions",
+						"{{redirectionTransactionId}}",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Simulate successful Scheme response",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"HTTP response code is 200 with JSON content\", () => {",
+							"    pm.response.to.have.status(200);",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+							"});",
+							"",
+							" pm.test('Authenticate result returns RRes message', () => {",
+							"        pm.expect(pm.response.json().messageType).to.eql('RRes');",
+							"        pm.expect(pm.response.json().threeDSServerTransID).to.eql(pm.collectionVariables.get(\"redirectionTransactionId\"));",
+							"    });"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"dsTransID\", \"cedec51a-2163-470d-b236-b295638b12e1\"); //we hardcode it in the scheme response simulation, we store it in variable for CB2A checks\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"threeDSServerTransID\": \"{{redirectionTransactionId}}\",\r\n    \"acsTransID\": \"{{acsTransID}}\",\r\n    \"acsRenderingType\": \"acsRenderingType\",\r\n    \"authenticationMethod\": \"authenticationMethod\",\r\n    \"authenticationType\": \"01\",\r\n    \"authenticationValue\": \"AAABBiZwhQAAAAAAeHCFEFBG0II=\",\r\n    \"dsTransID\": \"{{dsTransID}}\",\r\n    \"eci\": \"01\",\r\n    \"interactionCounter\": \"01\",\r\n    \"messageCategory\": \"01\",\r\n    \"messageExtension\": [\r\n        {\r\n            \"name\": \"CB-AVALGO\",\r\n            \"id\": \"A000000042_CB-AVALGO\",\r\n            \"criticalityIndicator\": false,\r\n            \"data\": {\r\n                \"value\": \"A\"\r\n            }\r\n        },\r\n        {\r\n            \"name\": \"CB-SCORE\",\r\n            \"id\": \"A000000042_CB-SCORE\",\r\n            \"criticalityIndicator\": false,\r\n            \"data\": {\r\n                \"value\": \"9\"\r\n            }\r\n        },\r\n        {\r\n            \"name\": \"CB-EXEMPTION\",\r\n            \"id\": \"A000000042_CB-EXEMPTION\",\r\n            \"criticalityIndicator\": false,\r\n            \"data\": {\r\n                \"value\": \"exemption\"\r\n            }\r\n        },\r\n        {\r\n            \"name\": \"whitelistStatus\",\r\n            \"id\": \"A000000004-acsData\",\r\n            \"criticalityIndicator\": false,\r\n            \"data\": {\r\n                \"value\": \"whitelist_status\"\r\n            }\r\n        }\r\n    ],\r\n    \"messageType\": \"RReq\",\r\n    \"messageVersion\": \"{{messageVersion}}\",\r\n    \"transStatus\": \"Y\",\r\n    \"transStatusReason\": \"02\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{3DS_FRONT}}/threedsecure-front/v2/transactions/{{redirectionTransactionId}}/authentication_result",
+					"host": [
+						"{{3DS_FRONT}}"
+					],
+					"path": [
+						"threedsecure-front",
+						"v2",
+						"transactions",
+						"{{redirectionTransactionId}}",
+						"authentication_result"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check execcode",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"HTTP response code is 200 with JSON content\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test('Check Execcode of the transaction is 0000', () => {",
+							"        pm.expect(pm.response.json().execCode).to.eql('0000');",
+							"        pm.expect(pm.response.json().publicExecCode).to.eql('0000');",
+							"        pm.expect(pm.response.json().publicId).to.eql(pm.collectionVariables.get(\"publicTransactionId\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{MICROSERVICES}}/shardTransactions/{{publicTransactionId}}",
+					"host": [
+						"{{MICROSERVICES}}"
+					],
+					"path": [
+						"shardTransactions",
+						"{{publicTransactionId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get GCP transaction data",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let transactionLog = pm.response.json();\r",
+							"\r",
+							"saveTransactionsInformationInVariable(transactionLog);\r",
+							"\r",
+							"pm.test(\"A Natixis route is indicated\", function () {\r",
+							"    let route = transactionLog.items[0].route.acquirerServer;\r",
+							"    pm.expect(route.toLowerCase()).to.contain(\"natixis\");\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set('eventId', transactionLog.items[0].id);\r",
+							"pm.collectionVariables.set('lastTransactionTimestamp', transactionLog.items[0].header.receiveTimestamp);\r",
+							"\r",
+							"if(transactionLog.items[0].environment.paymentToken) {\r",
+							"    pm.collectionVariables.set('alias', transactionLog.items[0].environment.paymentToken.alias);\r",
+							"}\r",
+							"\r",
+							"postman.setNextRequest(\"Get GCP event data\");\r",
+							"\r",
+							"\r",
+							"function saveTransactionsInformationInVariable(transactionLog) {\r",
+							"    let transactionId = pm.collectionVariables.get(\"publicTransactionId\");\r",
+							"    let authorizationCode = transactionLog.items[0].transaction.supplierExchange.authorizationCode;\r",
+							"    let dateAndTime = new Date(transactionLog.items[0].header.receiveTimestamp).toLocaleString();\r",
+							"    let clearResponseData = transactionLog.items[0].transaction.supplierExchange.supplierInfo;\r",
+							"    let scheme = transactionLog.items[0].environment.card.brand;\r",
+							"    let selectedBrand = pm.collectionVariables.get(\"selectedBrand\").toLowerCase();\r",
+							"    let pan = pm.collectionVariables.get(\"cardCode\");\r",
+							"    let cardCvv = pm.collectionVariables.get(\"cardCvv\");\r",
+							"    let cardValidityDate = pm.collectionVariables.get(\"cardValidityDate\");\r",
+							"    let clientIP = pm.collectionVariables.get(\"clientIP\");\r",
+							"    let threeDSecurePreference = pm.collectionVariables.get(\"threeDSecurePreference\");\r",
+							"    let threeDSecureMode = pm.collectionVariables.get(\"threeDSecureMode\");\r",
+							"    let operationType = transactionLog.items[0].header.operationType;\r",
+							"    let amount = transactionLog.items[0].transaction.details.totalAmountInCurrency;\r",
+							"    let uniqueRefID = transactionLog.items[0].transaction.supplierExchange.initiatorTransactionId;\r",
+							"\r",
+							"    let tags = JSON.parse(pm.collectionVariables.get(\"tags\"));\r",
+							"\r",
+							"    //UDV data\r",
+							"    let merchantId = pm.collectionVariables.get(\"merchantId\");\r",
+							"    let accountContractNumber = pm.collectionVariables.get(\"accountContractNumber\");\r",
+							"    let merchantCategoryCode = pm.collectionVariables.get(\"merchantCategoryCode\");\r",
+							"    let siret = pm.collectionVariables.get(\"siret\");\r",
+							"    let currency = pm.collectionVariables.get(\"currency\");\r",
+							"\r",
+							"    //MID data\r",
+							"    let threeDSecureDescriptor = pm.collectionVariables.get(\"threeDSecureDescriptor\");\r",
+							"\r",
+							"    let paymentFacilitatorId = pm.collectionVariables.get(`paymentFacilitatorId_${selectedBrand}`);\r",
+							"    let descriptorPrefix = pm.collectionVariables.get(`descriptorPrefix_${selectedBrand}`);\r",
+							"\r",
+							"    //PayFac Submerchant fields\r",
+							"    let submerchantExternalId = undefined;\r",
+							"    let submerchantSiret = undefined;\r",
+							"    let submerchantCategoryCode = undefined;\r",
+							"    let submerchantDescriptor = undefined;\r",
+							"    let submerchantCity = undefined;\r",
+							"    let submerchantZipCode = undefined;\r",
+							"    let submerchantCountry = undefined;\r",
+							"    let submerchantStreet = undefined;\r",
+							"\r",
+							"    if(tags.includes(\"PAYFAC\")) {\r",
+							"        submerchantExternalId = pm.collectionVariables.get(\"submerchantExternalId\");\r",
+							"        submerchantSiret = pm.collectionVariables.get(\"submerchantSiret\");\r",
+							"        submerchantCategoryCode = pm.collectionVariables.get(\"submerchantCategoryCode\");\r",
+							"        submerchantDescriptor = pm.collectionVariables.get(\"submerchantDescriptor\");\r",
+							"        submerchantCity = pm.collectionVariables.get(\"submerchantCity\");\r",
+							"        submerchantZipCode = pm.collectionVariables.get(\"submerchantZipCode\");\r",
+							"        submerchantCountry = pm.collectionVariables.get(\"submerchantCountry\");\r",
+							"        submerchantStreet = pm.collectionVariables.get(\"submerchantStreet\");\r",
+							"    }\r",
+							"\r",
+							"    let transactionsList = null;\r",
+							"\r",
+							"    if(pm.collectionVariables.has(\"transactions\") && pm.collectionVariables.get(\"transactions\") != \"\") {\r",
+							"        transactionsList = JSON.parse(pm.collectionVariables.get(\"transactions\"));\r",
+							"    }\r",
+							"    else {\r",
+							"        transactionsList = [];\r",
+							"    }\r",
+							"\r",
+							"    transactionsList.push({transactionId, dateAndTime, authorizationCode, scheme, selectedBrand, pan, cardCvv, cardValidityDate, clientIP, threeDSecurePreference, threeDSecureMode, operationType, amount, uniqueRefID, clearResponseData, merchantId, accountContractNumber, merchantCategoryCode, siret, currency, threeDSecureDescriptor, tags, paymentFacilitatorId, descriptorPrefix, submerchantExternalId, submerchantSiret, submerchantCategoryCode, submerchantDescriptor, submerchantCity, submerchantZipCode, submerchantCountry, submerchantStreet});\r",
+							"\r",
+							"    pm.collectionVariables.set(\"transactions\", JSON.stringify(transactionsList));\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{MICROSERVICES}}/processing-operations/operations?transaction.id={{publicTransactionId}}",
+					"host": [
+						"{{MICROSERVICES}}"
+					],
+					"path": [
+						"processing-operations",
+						"operations"
+					],
+					"query": [
+						{
+							"key": "transaction.id",
+							"value": "{{publicTransactionId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get GCP event data",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let eventLog = pm.response.json();\r",
+							"\r",
+							"let desiredSupplierExchangeBlock = eventLog.items.filter(item => item.type === \"SUPPLIER_EXCHANGE\" && typeof item.exchange.supplierInfo !== 'undefined');\r",
+							"pm.expect(desiredSupplierExchangeBlock.length).to.equal(1);\r",
+							"let supplierExchange_originalRequest = JSON.parse(desiredSupplierExchangeBlock[0].exchange.originalRequest);\r",
+							"\r",
+							"let cardAcceptor = supplierExchange_originalRequest.cardAcceptor;\r",
+							"pm.test(\"The E-RSB fallback route is not taken\", function () {\r",
+							"    pm.expect(cardAcceptor.toLowerCase()).to.not.contain(\"rsb\");\r",
+							"});\r",
+							"\r",
+							"let acceptorSystemCountryCode = undefined;\r",
+							"if (supplierExchange_originalRequest.additionalData.facilitator) {\r",
+							"    acceptorSystemCountryCode = supplierExchange_originalRequest.additionalData.facilitator.accSysCountryCd;\r",
+							"}\r",
+							"\r",
+							"let galittRequestTransactionTime = supplierExchange_originalRequest.transactionTime;\r",
+							"let stan = supplierExchange_originalRequest.stan;\r",
+							"\r",
+							"let fraudExchangeBlock = eventLog.items.find(item => item.type === \"FRAUD_EXCHANGE\");\r",
+							"let fraudExchange_originalRequest = JSON.parse(fraudExchangeBlock.exchange.originalRequest);\r",
+							"let cardServiceType = fraudExchange_originalRequest.CARDSERVICETYPE;\r",
+							"\r",
+							"let transactionsList = JSON.parse(pm.collectionVariables.get(\"transactions\"));\r",
+							"let transactionToUpdate = transactionsList.find(transaction => transaction.transactionId === pm.collectionVariables.get(\"publicTransactionId\"));\r",
+							"transactionToUpdate.acceptorSystemCountryCode = acceptorSystemCountryCode;\r",
+							"transactionToUpdate.galittRequestTransactionTime = galittRequestTransactionTime;\r",
+							"transactionToUpdate.stan = stan;\r",
+							"transactionToUpdate.cardServiceType = cardServiceType;\r",
+							"pm.collectionVariables.set(\"transactions\", JSON.stringify(transactionsList));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{MICROSERVICES}}/processing-operations/operations/{{eventId}}/events",
+					"host": [
+						"{{MICROSERVICES}}"
+					],
+					"path": [
+						"processing-operations",
+						"operations",
+						"{{eventId}}",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get transaction technical Id from GALITT mock",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(request.name + \"\\n\" + request.method + \"\\n\" + request.url + \"\\nreturned 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.environment.set(\"mockTransactionId\", jsonData.items[0].id);\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{MOCK_GALITT}}/transactionAuthorization?publicId={{publicTransactionId}}",
+					"host": [
+						"{{MOCK_GALITT}}"
+					],
+					"path": [
+						"transactionAuthorization"
+					],
+					"query": [
+						{
+							"key": "publicId",
+							"value": "{{publicTransactionId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Transaction details from GALITT mock",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"eval(pm.collectionVariables.get(\"TestHelper\"));\r",
+							"\r",
+							"pm.test(request.name + \"\\n\" + request.method + \"\\n\" + request.url + \"\\nreturned 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"let jsonData = pm.response.json();\r",
+							"\r",
+							"let authorizationRequest = jsonData.jsonResponse.Body.AuthorizationResponse.clearData.request;\r",
+							"let authorizationResponse = jsonData.jsonResponse.Body.AuthorizationResponse.clearData.response;\r",
+							"let executedTransaction = JSON.parse(pm.collectionVariables.get(\"transactions\")).find(transaction => transaction.transactionId === pm.collectionVariables.get(\"publicTransactionId\"));\r",
+							"\r",
+							"console.log(\"Executed transaction \" + executedTransaction.transactionId + \" :\");\r",
+							"console.log(executedTransaction);\r",
+							"console.log(\"CB2A AUTO :\");\r",
+							"console.log(authorizationRequest);\r",
+							"\r",
+							"//---------------------------------------GENERIC-----------------------------------------------------------\r",
+							"pm.test(\"Check CB2A Auto request: Field 2 - Primary Account Number (PAN)\", function () {\r",
+							"    let pan = executedTransaction.pan;\r",
+							"\r",
+							"    if (executedTransaction.tags.includes(\"CARD_ON_FILE_USE\")) {\r",
+							"        let initialTransactionFields = JSON.parse(pm.collectionVariables.get(\"initialTransactionFields\"));\r",
+							"        pan = initialTransactionFields.pan;\r",
+							"    }\r",
+							"\r",
+							"    let maskedPan = pan.substring(0,6) + \"******\" + pan.substring(pan.length - 4)\r",
+							"    pm.expect(authorizationRequest['2']).to.be.equal(maskedPan);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 3 - Processing Code\", function () {\r",
+							"    if (executedTransaction.tags.includes(\"CRYPTO\")) {\r",
+							"        pm.expect(authorizationRequest['3']).to.be.equal('110000');\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(authorizationRequest['3']).to.be.equal('000000');\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 4 - AMOUNT\", function () {\r",
+							"    let amount = (executedTransaction.amount * 100).toString().padStart(12, '0');\r",
+							"    pm.expect(authorizationRequest['4']).to.be.equal(amount);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 7 - Transmission date and time\", function () {\r",
+							"    let galittDate = new Date(executedTransaction.galittRequestTransactionTime );\r",
+							"\r",
+							"    let year = galittDate.getUTCFullYear();\r",
+							"\r",
+							"    let field7 = authorizationRequest['7'];\r",
+							"    let monthIndex = parseInt(field7.substring(0,2)) - 1;\r",
+							"    let day = parseInt(field7.substring(2,4));\r",
+							"    let hour = parseInt(field7.substring(4,6));\r",
+							"    let minute = parseInt(field7.substring(6,8));\r",
+							"    let second = parseInt(field7.substring(8,10));\r",
+							"\r",
+							"    let fieldDate = new Date(Date.UTC(year, monthIndex, day, hour, minute, second));\r",
+							"\r",
+							"    const diffTimeInSeconds = Math.abs(fieldDate - galittDate) / 1000;\r",
+							"    \r",
+							"    pm.expect(diffTimeInSeconds).to.be.lte(3);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 11 - Systems trace audit number\", function () {\r",
+							"    pm.expect(authorizationRequest['11']).to.be.equal(executedTransaction.stan);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 12 - Time, local transaction\", function () {\r",
+							"    let date = new Date(executedTransaction.galittRequestTransactionTime );\r",
+							"\r",
+							"    let hour = date.getHours().toString().padStart(2, '0');\r",
+							"    let minute = date.getMinutes().toString().padStart(2, '0');\r",
+							"    let second = date.getSeconds().toString().padStart(2, '0');\r",
+							"    \r",
+							"    pm.expect(authorizationRequest['12']).to.be.equal(hour + minute + second);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 13 - Date, local transaction\", function () {\r",
+							"    let date = new Date(executedTransaction.galittRequestTransactionTime );\r",
+							"\r",
+							"    let month = (date.getUTCMonth() + 1).toString().padStart(2, '0');\r",
+							"    let day = date.getUTCDate().toString().padStart(2, '0');\r",
+							"    \r",
+							"    pm.expect(authorizationRequest['13']).to.be.equal(month + day);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 14 - Date, expiration\", function () {\r",
+							"    let cardValidityDate = executedTransaction.cardValidityDate;\r",
+							"\r",
+							"    if (executedTransaction.tags.includes(\"CARD_ON_FILE_USE\")) {\r",
+							"        let initialTransactionFields = JSON.parse(pm.collectionVariables.get(\"initialTransactionFields\"));\r",
+							"        cardValidityDate = initialTransactionFields.cardValidityDate;\r",
+							"    }\r",
+							"\r",
+							"    let monthAndYear = cardValidityDate.split('-'); //cardValidityDate has the format MM-YY\r",
+							"    pm.expect(authorizationRequest['14']).to.be.equal(monthAndYear[1] + monthAndYear[0]); //The field 14 has the format YYMM\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 18 - Merchant Category Code\", function () {\r",
+							"    if (executedTransaction.tags.includes(\"PAYFAC\")) {\r",
+							"        pm.expect(authorizationRequest['18']).to.be.equal(executedTransaction.submerchantCategoryCode);\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(authorizationRequest['18']).to.be.equal(executedTransaction.merchantCategoryCode);\r",
+							"    }\r",
+							"\r",
+							"    if (executedTransaction.tags.includes(\"CRYPTO\")) {\r",
+							"        pm.expect(authorizationRequest['18']).to.be.equal('6051');\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 22 - Point of service entry mode\", function () {\r",
+							"    if (executedTransaction.tags.includes(\"CARD_ON_FILE_CREATION\") || executedTransaction.tags.includes(\"CARD_ON_FILE_USE\")) {\r",
+							"        pm.expect(authorizationRequest['22']).to.be.equal(\"102\");\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(authorizationRequest['22']).to.be.equal(\"012\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 25 - Point of service condition code = MOTO as per Natixis request\", function () {\r",
+							"    pm.expect(authorizationRequest['25']).to.be.equal('08');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 32 - Acquiring institution identification code = Dalenys\", function () {\r",
+							"    pm.expect(authorizationRequest['32']).to.be.equal('46625916378');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 37 - Retrieval reference number = Public Transaction ID\", function () {\r",
+							"    let firstCharacter = executedTransaction.transactionId.charAt(0);\r",
+							"    if (firstCharacter === 'A') {\r",
+							"        pm.expect(authorizationRequest['37'].trim()).to.be.equal('1' + executedTransaction.transactionId.substring(1));\r",
+							"    }\r",
+							"    else if (firstCharacter === 'B') {\r",
+							"        pm.expect(authorizationRequest['37'].trim()).to.be.equal('2' + executedTransaction.transactionId.substring(1));\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 41 - Card acceptor terminal identification\", function () {\r",
+							"    pm.expect(authorizationRequest['41']).to.be.equal('00000001');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 42 - Card acceptor identification code\", function () {\r",
+							"    if (executedTransaction.tags.includes(\"PAYFAC\")) {\r",
+							"        pm.expect(authorizationRequest['42'].trim()).to.be.equal(executedTransaction.submerchantSiret);\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(authorizationRequest['42'].trim()).to.be.equal(executedTransaction.siret);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 47.08 - Site type\", function () {\r",
+							"    pm.expect(authorizationRequest['47']['08']).to.be.equal('2');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 47.33 - CB2A specification date\", function () {\r",
+							"    pm.expect(authorizationRequest['47']['33']).to.be.equal('1903'); //YYMM of March 2019\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 47.96 - SIRET\", function () {\r",
+							"    if (executedTransaction.tags.includes(\"PAYFAC\")) {\r",
+							"        pm.expect(authorizationRequest['47']['96']).to.be.equal(executedTransaction.submerchantSiret);\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(authorizationRequest['47']['96']).to.be.equal(executedTransaction.siret);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 47.99 - Original unique transaction identifier\", function () {\r",
+							"    if (executedTransaction.tags.includes(\"CARD_ON_FILE_USE\") && executedTransaction.tags.includes(\"SUBSCRIPTION\")) {\r",
+							"        let initialTransactionFields = JSON.parse(pm.collectionVariables.get(\"initialTransactionFields\"));\r",
+							"        pm.expect(authorizationRequest['47']['99']).to.be.equal(initialTransactionFields[\"response\"][\"47.95\"]);\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(authorizationRequest['47']['99']).to.be.equal(undefined);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 47.A0 - card acceptor terminal identification\", function () {\r",
+							"    pm.expect(authorizationRequest['47']['A0']).to.be.equal('00000001');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 49 - Currency code, transaction\", function () {\r",
+							"    let currencyCode = undefined;\r",
+							"\r",
+							"    switch (executedTransaction.currency) {\r",
+							"        case \"EUR\": currencyCode = \"978\"; break;\r",
+							"        default : throw new Error('CURRENCY is not handled');\r",
+							"    }\r",
+							"\r",
+							"    pm.expect(authorizationRequest['49']).to.be.equal(currencyCode);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 53 - Security related control information\", function () {\r",
+							"    pm.expect(authorizationRequest['53']).to.be.equal('0000000000000000');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 54 - Amounts, additional\", function () {\r",
+							"    pm.expect(authorizationRequest['54']).to.be.equal(undefined);\r",
+							"});\r",
+							"\r",
+							"pm.test(`Check CB2A Auto request: Field 56.0002 - Selected Brand = ${executedTransaction.selectedBrand}`, function () {\r",
+							"    if (executedTransaction.selectedBrand) {\r",
+							"        pm.expect(authorizationRequest['56']['0002']).to.be.equal('0x01');\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(`Check CB2A Auto request: Field 56.0003 - Selected Brand = ${executedTransaction.selectedBrand}`, function () {\r",
+							"    let value = null;\r",
+							"\r",
+							"    switch (executedTransaction.selectedBrand) {\r",
+							"        case 'cb': value = \"00\"; break;\r",
+							"        case 'visa': value = \"01\"; break;\r",
+							"        case 'mastercard': value = \"04\"; break;\r",
+							"        case 'amex': value = \"09\"; break;\r",
+							"        default : throw new Error('SELECTEDBRAND is not known');\r",
+							"    }\r",
+							"\r",
+							"    pm.expect(authorizationRequest['56']['0003']).to.be.equal(`0x${value}`);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 56.0005 - Acceptance system card product code\", function () {\r",
+							"    if (executedTransaction.cardServiceType === \"Credit\") {\r",
+							"        pm.expect(hexadecimalToText(authorizationRequest['56']['0005']).trim()).to.be.equal('C');\r",
+							"    }\r",
+							"    else if (executedTransaction.cardServiceType === \"Debit\") {\r",
+							"        pm.expect(hexadecimalToText(authorizationRequest['56']['0005']).trim()).to.be.equal('D');\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 56.0010 - IP address\", function () {\r",
+							"    if (executedTransaction.tags.includes(\"3DS\")) {\r",
+							"        pm.expect(hexadecimalToText(authorizationRequest['56']['0010'])).to.be.equal(executedTransaction.clientIP);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 56.0022 - 3DS Version\", function () {\r",
+							"    if (executedTransaction.tags.includes(\"3DS\")) {\r",
+							"        pm.expect(hexadecimalToText(authorizationRequest['56']['0022'])).to.be.equal('2');\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(hexadecimalToText(authorizationRequest['56']['0022'])).to.be.equal(undefined);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 56.0025 - Payment Facilitator Id\", function () {\r",
+							"     if (executedTransaction.tags.includes(\"PAYFAC\")) {\r",
+							"        pm.expect(hexadecimalToText(authorizationRequest['56']['0025']).trim()).to.be.equal(executedTransaction.paymentFacilitatorId);\r",
+							"     }\r",
+							"     else {\r",
+							"        pm.expect(authorizationRequest['56']['0025']).to.be.equal(undefined);\r",
+							"     }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 56.0027 - Final Merchant Id\", function () {\r",
+							"    if (executedTransaction.tags.includes(\"PAYFAC\")) {\r",
+							"        pm.expect(hexadecimalToText(authorizationRequest['56']['0027']).trim()).to.be.equal(executedTransaction.submerchantExternalId);\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(authorizationRequest['56']['0027']).to.be.equal(undefined);\r",
+							"    } \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 56.0028 - Payment use case\", function () {\r",
+							"    if (executedTransaction.tags.includes(\"SUBSCRIPTION\")) {\r",
+							"        pm.expect(authorizationRequest['56']['0028']).to.be.equal('0x05');\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(authorizationRequest['56']['0028']).to.be.equal('0x01');\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 56.0029 - Card-on-file action\", function () {\r",
+							"    if (executedTransaction.tags.includes(\"CARD_ON_FILE_CREATION\")) {\r",
+							"        pm.expect(hexadecimalToText(authorizationRequest['56']['0029'])).to.be.equal('1');\r",
+							"    }\r",
+							"    else if (executedTransaction.tags.includes(\"CARD_ON_FILE_USE\")) {\r",
+							"        pm.expect(hexadecimalToText(authorizationRequest['56']['0029'])).to.be.equal('2');\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(authorizationRequest['56']['0029']).to.be.equal(undefined);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 56.0033 - Exemption indicator\", function () {\r",
+							"    let typeDauthentification = hexadecimalToText(authorizationRequest['59']['0419'].replace(\"0x\",'').substring(0,4));\r",
+							"\r",
+							"    if (executedTransaction.tags.includes(\"3DS\") && typeDauthentification === \"FR\") {\r",
+							"        let binary = hexadecimalToBinary(authorizationRequest['56']['0033']);\r",
+							"        let byte1 = binary.substring(0, 8);\r",
+							"        let bit1 = parseInt(byte1.charAt(byte1.length - 1)); //Exemption carte entreprise (non attribuée à une personne physique, donc Corporate Card, à ne pas confondre avec Business Card)\r",
+							"        let bit3 = parseInt(byte1.charAt(byte1.length - 3)); //Exemption analyse de risques par l’accepteur/l’acquéreur\r",
+							"        let bit4 = parseInt(byte1.charAt(byte1.length - 4)); //Exemption petits montants\r",
+							"\r",
+							"        if (executedTransaction.tags.includes(\"INTERNAL_MPI\")) {\r",
+							"            if (executedTransaction.tags.includes(\"CORPORATE_CARD\")) {\r",
+							"                pm.expect(bit1).to.be.equal(1);\r",
+							"            }\r",
+							"            else {\r",
+							"                pm.expect(bit1).to.be.equal(0);\r",
+							"            }\r",
+							"\r",
+							"            if (executedTransaction.amount <= 30) {\r",
+							"                pm.expect(bit4).to.be.equal(1);\r",
+							"            }\r",
+							"            else {\r",
+							"                pm.expect(bit4).to.be.equal(0);\r",
+							"            }\r",
+							"\r",
+							"            if(bit1 === 0 && bit4 === 0) {\r",
+							"                pm.expect(bit3).to.be.equal(1);\r",
+							"            }\r",
+							"            else {\r",
+							"                pm.expect(bit3).to.be.equal(0);\r",
+							"            }\r",
+							"        }\r",
+							"        else if (executedTransaction.tags.includes(\"EXTERNAL_MPI\")) {\r",
+							"            switch(executedTransaction.threeDSecureExemptionReason) {\r",
+							"                case \"low_value\":\r",
+							"                    pm.expect(bit1).to.be.equal(0);\r",
+							"                    pm.expect(bit3).to.be.equal(0);\r",
+							"                    pm.expect(bit4).to.be.equal(1);\r",
+							"                    break;\r",
+							"                case \"transaction_risk_analysis\":\r",
+							"                    pm.expect(bit1).to.be.equal(0);\r",
+							"                    pm.expect(bit3).to.be.equal(1);\r",
+							"                    pm.expect(bit4).to.be.equal(0);\r",
+							"                    break;\r",
+							"                case \"secure_corporate_payments\":\r",
+							"                    pm.expect(bit1).to.be.equal(1);\r",
+							"                    pm.expect(bit3).to.be.equal(0);\r",
+							"                    pm.expect(bit4).to.be.equal(0);\r",
+							"                    break;\r",
+							"            }\r",
+							"        }\r",
+							"    }\r",
+							"    else if (executedTransaction.tags.includes(\"3DS\")) {\r",
+							"        pm.expect(authorizationRequest['56']['0033']).to.be.equal(\"0x0000\");\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(authorizationRequest['56']['0033']).to.be.equal(undefined);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 56.0036 - Authentication merchant name\", function () {\r",
+							"    if (executedTransaction.tags.includes(\"3DS\")) {\r",
+							"        if (executedTransaction.tags.includes(\"PAYFAC\")) {\r",
+							"            pm.expect(hexadecimalToText(authorizationRequest['56']['0036']).trim()).to.be.equal(executedTransaction.submerchantDescriptor);\r",
+							"        }\r",
+							"        else {\r",
+							"            pm.expect(hexadecimalToText(authorizationRequest['56']['0036']).trim()).to.be.equal(executedTransaction.threeDSecureDescriptor);\r",
+							"        }\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(authorizationRequest['56']['0036']).to.be.equal(undefined);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 56.0038 - Authentication amount\", function () {\r",
+							"    if (executedTransaction.tags.includes(\"3DS\")) {\r",
+							"         if (executedTransaction.tags.includes(\"NTIMES\") === false) {\r",
+							"             pm.expect(authorizationRequest['56']['0038'].replace(\"0x\",'')).to.be.equal(authorizationRequest['4']);\r",
+							"         }\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(authorizationRequest['56']['0038']).to.be.equal(undefined);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 59.0100 - Function code\", function () {\r",
+							"    if (executedTransaction.amount === 0) {\r",
+							"        pm.expect(authorizationRequest['59']['0100']).to.be.equal(\"0x0108\");\r",
+							"    }\r",
+							"   else {\r",
+							"       pm.expect(authorizationRequest['59']['0100']).to.be.equal(\"0x0100\");\r",
+							"   }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 59.0101 - Message reason code\", function () {\r",
+							"   pm.expect(authorizationRequest['59']['0101']).to.be.equal(\"0x1506\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 59.0102 - Transaction year\", function () {\r",
+							"    let galittDate = new Date(executedTransaction.galittRequestTransactionTime );\r",
+							"    let year = galittDate.getUTCFullYear();\r",
+							"\r",
+							"    pm.expect(authorizationRequest['59']['0102'].replace(\"0x\",'')).to.be.equal(year.toString().substring(2));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 59.0200 - Technical/Regulatory Environment\", function () {\r",
+							"    let expectedValue = undefined;\r",
+							"    \r",
+							"    let initialTransactionFields = pm.collectionVariables.get(\"initialTransactionFields\") ? JSON.parse(pm.collectionVariables.get(\"initialTransactionFields\")) : undefined;\r",
+							"\r",
+							"    if (executedTransaction.tags.includes(\"MOTO\")) {\r",
+							"        expectedValue = \"21\";\r",
+							"    }\r",
+							"    else if (executedTransaction.tags.includes(\"CARD_ON_FILE_USE\") && executedTransaction.tags.includes(\"SUBSCRIPTION\") && initialTransactionFields[\"request\"][\"59.0200\"] === \"21\") {\r",
+							"        expectedValue = \"27\";\r",
+							"    }\r",
+							"    else if (executedTransaction.tags.includes(\"CARD_ON_FILE_USE\") && executedTransaction.tags.includes(\"SUBSCRIPTION\") && initialTransactionFields[\"request\"][\"59.0200\"] === \"24\") {\r",
+							"        expectedValue = \"28\";\r",
+							"    }\r",
+							"    else {\r",
+							"        expectedValue = \"24\";\r",
+							"    }\r",
+							"    \r",
+							"    pm.expect(authorizationRequest['59']['0200'].replace(\"0x\",'')).to.be.equal(expectedValue);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 59.0202 - Numéro de contrat accepteur\", function () {\r",
+							"    pm.expect(parseInt(authorizationRequest['59']['0202'].replace(\"0x\",''))).to.be.equal(parseInt(executedTransaction.accountContractNumber));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 59.0207 - AMOUNT\", function () {\r",
+							"    pm.expect(authorizationRequest['59']['0207'].replace(\"0x\",'')).to.be.equal(authorizationRequest['4']);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 59.020B - TASA\", function () {\r",
+							"    pm.expect(authorizationRequest['59']['020B']).to.be.equal(\"0xA00000004200\" + authorizationRequest['59']['0200'].replace(\"0x\",''));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 59.0300 - Card security code\", function () {\r",
+							"    if (executedTransaction.cardCvv) {\r",
+							"        pm.expect(authorizationRequest['59']['0300']).to.be.equal(\"0x010***00\");\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(authorizationRequest['59']['0300']).to.be.equal(\"0x00\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 59.0401 - Secure Remote Payment Usage Result\", function () {\r",
+							"    if (executedTransaction.tags.includes(\"3DS\")) {\r",
+							"        pm.expect(authorizationRequest['59']['0401']).to.be.equal(\"0x****************************************\");\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(authorizationRequest['59']['0401']).to.be.equal(undefined);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 59.0407 - Electronic commerce transaction security type\", function () {\r",
+							"    if (executedTransaction.tags.includes(\"MOTO\")) {\r",
+							"        pm.expect(authorizationRequest['59']['0407']).to.be.equal(undefined);\r",
+							"    }\r",
+							"    else if (executedTransaction.tags.includes(\"3DS\")) {\r",
+							"        pm.expect(authorizationRequest['59']['0407']).to.be.equal(\"0x20\");\r",
+							"    }\r",
+							"    else if (executedTransaction.tags.includes(\"CARD_ON_FILE_USE\") || (executedTransaction.tags.includes(\"EXTERNAL_MPI\") && executedTransaction.threeDSecureCavv === undefined)) {\r",
+							"        pm.expect(authorizationRequest['59']['0407']).to.be.equal(\"0x09\");\r",
+							"    }\r",
+							"    else if (executedTransaction.tags.includes(\"XPAY\")) {\r",
+							"        pm.expect(authorizationRequest['59']['0407']).to.be.equal(\"0x21\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 59.0411 - Cardholder authentication value calculation method\", function () {\r",
+							"    if (executedTransaction.tags.includes(\"3DS\")) {\r",
+							"        if (executedTransaction.tags.includes(\"INTERNAL_MPI\")) {\r",
+							"            if (executedTransaction.threeDSecurePreference === \"SCA\" || executedTransaction.threeDSecurePreference === \"SCAMANDATE\") {\r",
+							"                pm.expect(hexadecimalToText(authorizationRequest['59']['0411'])).to.be.equal('A'); //\"CB-AVALGO\" that we send when simulating the Scheme response\r",
+							"            }\r",
+							"            else if (executedTransaction.threeDSecurePreference === \"FRICTIONLESS\" || executedTransaction.threeDSecurePreference === \"NOPREF\") {\r",
+							"                pm.expect(hexadecimalToText(authorizationRequest['59']['0411'])).to.be.equal('2'); //\"CB-AVALGO\" in the fake services for staging\r",
+							"            }\r",
+							"            else {\r",
+							"                pm.expect(hexadecimalToText(authorizationRequest['59']['0411'])).to.be.equal('0');\r",
+							"            }\r",
+							"        }\r",
+							"        else if (executedTransaction.tags.includes(\"EXTERNAL_MPI\")) {\r",
+							"            if (executedTransaction.threeDSecureCavvAlgorithm) {\r",
+							"                pm.expect(hexadecimalToText(authorizationRequest['59']['0411'])).to.be.equal(executedTransaction.threeDSecureCavvAlgorithm);\r",
+							"            }\r",
+							"            else {\r",
+							"                pm.expect(hexadecimalToText(authorizationRequest['59']['0411'])).to.be.equal('0');\r",
+							"            }\r",
+							"        }\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(authorizationRequest['59']['0411']).to.be.equal(undefined);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 59.0412 - Secure Remote Payment Usage Result\", function () {\r",
+							"    if (executedTransaction.tags.includes(\"3DS\")) {\r",
+							"        pm.expect(hexadecimalToText(authorizationRequest['59']['0412']).slice(1, 2)).to.be.equal('Y');\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 59.0419 - 3DS Authentication Type\", function () {\r",
+							"    if (executedTransaction.tags.includes(\"3DS\")) {\r",
+							"        let typeDauthentification = hexadecimalToText(authorizationRequest['59']['0419'].replace(\"0x\",'').substring(0,4));\r",
+							"        let souhaitCommercantPourAuthentification = authorizationRequest['59']['0419'].replace(\"0x\",'').substring(4,6);\r",
+							"\r",
+							"        if (executedTransaction.tags.includes(\"INTERNAL_MPI\")) {\r",
+							"            switch (executedTransaction.threeDSecurePreference) {\r",
+							"                case \"NOPREF\":\r",
+							"                case \"FRICTIONLESS\":\r",
+							"                    pm.expect(typeDauthentification).to.be.equal(\"FR\");\r",
+							"                    break;\r",
+							"                case \"SCA\":\r",
+							"                case \"SCAMANDATE\":\r",
+							"                    pm.expect(typeDauthentification).to.be.equal(\"CH\");\r",
+							"                    break;\r",
+							"                default :\r",
+							"                    throw new Error('threeDSecurePreference is not known or has an unexpected value for INTERNAL_MPI');\r",
+							"            }\r",
+							"        } \r",
+							"        else if (executedTransaction.tags.includes(\"EXTERNAL_MPI\")) {\r",
+							"            switch (executedTransaction.threeDSecureMode) {\r",
+							"                case \"FRICTIONLESS\":\r",
+							"                    pm.expect(typeDauthentification).to.be.equal(\"FR\");\r",
+							"                    break;\r",
+							"                case \"SCA\":\r",
+							"                    pm.expect(typeDauthentification).to.be.equal(\"CH\");\r",
+							"                    break;\r",
+							"                default :\r",
+							"                    throw new Error('threeDSecureMode is not known or has an unexpected value for EXTERNAL_MPI');\r",
+							"            }\r",
+							"        }\r",
+							"\r",
+							"        switch (executedTransaction.threeDSecurePreference) {\r",
+							"            case \"NOPREF\":\r",
+							"                pm.expect(souhaitCommercantPourAuthentification).to.be.equal(\"01\");\r",
+							"                break;\r",
+							"            case \"FRICTIONLESS\":\r",
+							"                pm.expect(souhaitCommercantPourAuthentification).to.be.equal(\"02\");\r",
+							"                break;\r",
+							"            case \"SCA\":\r",
+							"                pm.expect(souhaitCommercantPourAuthentification).to.be.equal(\"03\");\r",
+							"                break;\r",
+							"            case \"SCAMANDATE\":\r",
+							"                pm.expect(souhaitCommercantPourAuthentification).to.be.equal(\"04\");\r",
+							"                break;\r",
+							"        }\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 59.0420 - Electronic commerce data, initial transaction\", function () {\r",
+							"    if (executedTransaction.tags.includes(\"CARD_ON_FILE_USE\") && executedTransaction.tags.includes(\"SUBSCRIPTION\") && executedTransaction.tags.includes(\"3DS\")) {\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(authorizationRequest['59']['0420']).to.be.equal(undefined);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 59.0800 - Procedure/Invoice Type\", function () {\r",
+							"    if (executedTransaction.tags.includes(\"CRYPTO\")) {\r",
+							"        pm.expect(authorizationRequest['59']['0800']).to.be.equal(\"0x08\");\r",
+							"    }\r",
+							"    else if (executedTransaction.tags.includes(\"CARD_ON_FILE_CREATION\") && executedTransaction.tags.includes(\"SUBSCRIPTION\")) {\r",
+							"        pm.expect(authorizationRequest['59']['0800']).to.be.equal(\"0x06\");\r",
+							"    }\r",
+							"    else if (executedTransaction.tags.includes(\"CARD_ON_FILE_USE\") && executedTransaction.tags.includes(\"SUBSCRIPTION\")) {\r",
+							"        pm.expect(authorizationRequest['59']['0800']).to.be.equal(\"0x07\");\r",
+							"    } \r",
+							"    else {\r",
+							"        pm.expect(authorizationRequest['59']['0800']).to.be.equal(undefined);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto request: Field 59.0805 - Optional services supported (acceptor domain)\", function () {\r",
+							"    pm.expect(authorizationRequest['59']['0805']).to.be.equal(\"0x0004\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check CB2A Auto response: Field 39 - Response Code = Successful\", function () {\r",
+							"    pm.expect(authorizationResponse['39']).to.be.equal(\"00\");\r",
+							"});\r",
+							"\r",
+							"if (executedTransaction.tags.includes(\"CARD_ON_FILE_CREATION\")) {\r",
+							"    let initialTransactionFields = { request:{}, response:{}};\r",
+							"    initialTransactionFields[\"request\"][\"59.0200\"] = authorizationRequest['59']['0200'];\r",
+							"    initialTransactionFields[\"response\"][\"47.95\"] = authorizationResponse[\"47\"][\"95\"];\r",
+							"\r",
+							"    initialTransactionFields.pan = executedTransaction.pan;\r",
+							"    initialTransactionFields.cardValidityDate = executedTransaction.cardValidityDate;\r",
+							"\r",
+							"    pm.collectionVariables.set(\"initialTransactionFields\", JSON.stringify(initialTransactionFields));\r",
+							"}\r",
+							"\r",
+							"//---------------------------------------------------------------------------------------------------------\r",
+							"\r",
+							"if (executedTransaction.tags.includes(\"PAYFAC\")) {\r",
+							"    pm.test(\"Check CB2A Auto request: Field 43 - Nom et adresse de l’accepteur de carte\", function () {\r",
+							"        let desciptorPrefix = executedTransaction.descriptorPrefix;\r",
+							"        let descriptorSuffix = executedTransaction.submerchantDescriptor;\r",
+							"        let city = executedTransaction.submerchantCity;\r",
+							"        let zipCode = executedTransaction.submerchantZipCode;\r",
+							"        let country = executedTransaction.submerchantCountry;\r",
+							"        let spacePadding = '';\r",
+							"\r",
+							"        let dynamicDescriptor = desciptorPrefix + '*' + descriptorSuffix + '\\\\' + city + '\\\\' + zipCode + spacePadding + country;\r",
+							"\r",
+							"        if (dynamicDescriptor.length < 40) {\r",
+							"            spacePadding = spacePadding.padStart(40 - dynamicDescriptor.length, ' ');\r",
+							"            dynamicDescriptor = desciptorPrefix + '*' + descriptorSuffix + '\\\\' + city + '\\\\' + zipCode + spacePadding + country;\r",
+							"        }\r",
+							"        else if (dynamicDescriptor.length > 40) {\r",
+							"            city = city.substring(0, city.length - (dynamicDescriptor.length - 40));\r",
+							"            dynamicDescriptor = desciptorPrefix + '*' + descriptorSuffix + '\\\\' + city + '\\\\' + zipCode + spacePadding + country;\r",
+							"\r",
+							"            if (dynamicDescriptor.length > 40) {\r",
+							"                let descriptor = desciptorPrefix + '*' + descriptorSuffix;\r",
+							"                descriptor = descriptor.substring(0, descriptor.length - (dynamicDescriptor.length - 40));\r",
+							"                dynamicDescriptor = descriptor + '\\\\' + city + '\\\\' + zipCode + spacePadding + country;\r",
+							"            }\r",
+							"        }\r",
+							"\r",
+							"        pm.expect(authorizationRequest['43']).to.be.equal(dynamicDescriptor);\r",
+							"    });\r",
+							"\r",
+							"    //https://payplug-prod.atlassian.net/browse/CORP-39646\r",
+							"    /*pm.test(\"Check CB2A Auto request: Field 56.0023 - CONTAINER UUID\", function () {\r",
+							"        let uuidContainerList = authorizationRequest['56']['0023'];\r",
+							"        uuidContainerList.forEach(uuidContainerInHexadecimal => {\r",
+							"            let uuidContainer = hexadecimalToText(uuidContainerInHexadecimal);\r",
+							"            let nomenclature = uuidContainer.chatAt(0);\r",
+							"            let uuid = uuidContainer.substring(1);\r",
+							"\r",
+							"            pm.expect(nomenclature === '1' || nomenclature === '2').to.be.true;\r",
+							"\r",
+							"            if(nomenclature === '1') {\r",
+							"                pm.test(\"Check CB2A Auto request: Field 56.0023 - DS Transaction ID\", function () {\r",
+							"                    pm.expect(uuid).to.be.equal(jsonData.jsonRequest.Body.authorizationDebit.secure.extended.container.dsTransID);\r",
+							"                });\r",
+							"            }\r",
+							"            else if(nomenclature === '2') {\r",
+							"                pm.test(\"Check CB2A Auto request: Field 56.0023 - ACS Transaction ID\", function () {\r",
+							"                    pm.expect(uuid).to.be.equal(jsonData.jsonRequest.Body.authorizationDebit.secure.extended.container.acsTransID);\r",
+							"                });\r",
+							"            }\r",
+							"        })\r",
+							"\r",
+							"    });*/\r",
+							"\r",
+							"    pm.test(\"Check CB2A Auto request: Field 59.0407 - TYPE DE SECURISATION DE TRANSACTION DE COMMERCE ELECTRONIQUE\", function () {\r",
+							"        pm.expect(authorizationRequest['59']['0407'].replace(\"0x\",'')).to.be.equal(\"20\"); //20 for Vente à distance sécurisée (VADS)\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"//keep the authorizationCode = authorizationResponse['38']\r",
+							"\r",
+							"\r",
+							"function getSuccessEci(selectedBrand) {\r",
+							"    selectedBrand = selectedBrand.toLowerCase();\r",
+							"    let eci = null;\r",
+							"\r",
+							"    switch (selectedBrand) {\r",
+							"        case 'visa':\r",
+							"            eci = \"05\"\r",
+							"            break;\r",
+							"        case 'mastercard':\r",
+							"            eci = \"02\"\r",
+							"            break;\r",
+							"        case 'amex':\r",
+							"            eci = \"05\"\r",
+							"            break;\r",
+							"        default :\r",
+							"            throw new Error('SELECTEDBRAND is not known');\r",
+							"    }\r",
+							"\r",
+							"    return eci;\r",
+							"}\r",
+							"\r",
+							"postman.setNextRequest(pm.collectionVariables.get('nextRequest'));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{MOCK_GALITT}}/transactionAuthorization/{{mockTransactionId}}",
+					"host": [
+						"{{MOCK_GALITT}}"
+					],
+					"path": [
+						"transactionAuthorization",
+						"{{mockTransactionId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"function saveHostedLibraryIntoVariable(/*String*/ libraryName) {",
+					"    if(!pm.collectionVariables.has(libraryName)){",
+					"        pm.sendRequest(\"https://raw.githubusercontent.com/hadinehme/pong/master/\" + libraryName + \".js\", (error, response) => {",
+					"            pm.collectionVariables.set(libraryName, response.text());",
+					"        });",
+					"    }",
+					"}",
+					"",
+					"saveHostedLibraryIntoVariable(\"TestHelper\");"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "TestHelper",
+			"value": ""
+		},
+		{
+			"key": "udvIdentifier",
+			"value": ""
+		},
+		{
+			"key": "merchantId",
+			"value": ""
+		},
+		{
+			"key": "accountContractNumber",
+			"value": ""
+		},
+		{
+			"key": "merchantCategoryCode",
+			"value": ""
+		},
+		{
+			"key": "siret",
+			"value": ""
+		},
+		{
+			"key": "currency",
+			"value": ""
+		},
+		{
+			"key": "threeDSecureDescriptor",
+			"value": ""
+		},
+		{
+			"key": "secret",
+			"value": ""
+		},
+		{
+			"key": "hash",
+			"value": ""
+		},
+		{
+			"key": "selectedBrand",
+			"value": ""
+		},
+		{
+			"key": "cardCode",
+			"value": ""
+		},
+		{
+			"key": "cardCvv",
+			"value": ""
+		},
+		{
+			"key": "cardValidityDate",
+			"value": ""
+		},
+		{
+			"key": "clientIP",
+			"value": ""
+		},
+		{
+			"key": "threeDSecurePreference",
+			"value": ""
+		},
+		{
+			"key": "tags",
+			"value": ""
+		},
+		{
+			"key": "publicTransactionId",
+			"value": ""
+		},
+		{
+			"key": "redirectionTransactionId",
+			"value": ""
+		},
+		{
+			"key": "redirectionCardNetwork",
+			"value": ""
+		},
+		{
+			"key": "redirectionMethodUrl",
+			"value": ""
+		},
+		{
+			"key": "redirectionMethodData",
+			"value": ""
+		},
+		{
+			"key": "redirectionTarget",
+			"value": ""
+		},
+		{
+			"key": "nextRequest",
+			"value": ""
+		},
+		{
+			"key": "acsTransID",
+			"value": ""
+		},
+		{
+			"key": "messageVersion",
+			"value": ""
+		},
+		{
+			"key": "dsTransID",
+			"value": ""
+		},
+		{
+			"key": "transactions",
+			"value": ""
+		},
+		{
+			"key": "eventId",
+			"value": ""
+		},
+		{
+			"key": "lastTransactionTimestamp",
+			"value": ""
+		},
+		{
+			"key": "alias",
+			"value": ""
+		},
+		{
+			"key": "initialTransactionFields",
+			"value": ""
+		},
+		{
+			"key": "clientId",
+			"value": ""
+		},
+		{
+			"key": "paymentFacilitatorId_cb",
+			"value": ""
+		},
+		{
+			"key": "paymentFacilitatorId_visa",
+			"value": ""
+		},
+		{
+			"key": "paymentFacilitatorId_mastercard",
+			"value": ""
+		},
+		{
+			"key": "descriptorPrefix_cb",
+			"value": ""
+		},
+		{
+			"key": "descriptorPrefix_visa",
+			"value": ""
+		},
+		{
+			"key": "descriptorPrefix_mastercard",
+			"value": ""
+		},
+		{
+			"key": "submerchantExternalId",
+			"value": ""
+		},
+		{
+			"key": "submerchantSiret",
+			"value": ""
+		},
+		{
+			"key": "submerchantCategoryCode",
+			"value": ""
+		},
+		{
+			"key": "submerchantDescriptor",
+			"value": ""
+		},
+		{
+			"key": "submerchantCity",
+			"value": ""
+		},
+		{
+			"key": "submerchantZipCode",
+			"value": ""
+		},
+		{
+			"key": "submerchantCountry",
+			"value": ""
+		},
+		{
+			"key": "submerchantStreet",
+			"value": ""
+		},
+		{
+			"key": "xmlFilesToDownload",
+			"value": ""
+		},
+		{
+			"key": "xmlFilesToParse",
+			"value": ""
+		},
+		{
+			"key": "filesToDelete",
+			"value": ""
+		},
+		{
+			"key": "currentlyDownloadedFile",
+			"value": ""
+		},
+		{
+			"key": "to_encrypt-batch_012739.xml",
+			"value": ""
+		},
+		{
+			"key": "to_encrypt-batch_012738.xml",
+			"value": ""
+		},
+		{
+			"key": "to_encrypt-batch_012737.xml",
+			"value": ""
+		},
+		{
+			"key": "to_encrypt-batch_012736.xml",
+			"value": ""
+		},
+		{
+			"key": "telecollectFilename",
+			"value": ""
+		},
+		{
+			"key": "sixDigitBatchNumber",
+			"value": ""
+		},
+		{
+			"key": "transactionsCount",
+			"value": ""
+		},
+		{
+			"key": "telecollectFileContent",
+			"value": ""
+		},
+		{
+			"key": "telecollectFileSha1",
+			"value": ""
+		},
+		{
+			"key": "remoteMachineUsername",
+			"value": ""
+		},
+		{
+			"key": "currentlyDeletedFile",
+			"value": ""
+		},
+		{
+			"key": "deletionId",
+			"value": ""
+		},
+		{
+			"key": "localVpnIp",
+			"value": ""
+		},
+		{
+			"key": "threeDSecureMode",
+			"value": ""
+		}
+	]
+}
