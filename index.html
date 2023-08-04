@@ -18,6 +18,8 @@
       <p>
         <label for="passphrase">Enter SSH key <b>Passphrase</b> :</label>
         <input type="password" id="passphrase">
+        <label for="passphraseVisibility"><img src="./eye.png" width="20" height="20"/></label>
+        <input type="checkbox" id="passphraseVisibility" onclick="showPassphrase()" hidden>
       </p>
       <p>
         <button onclick="saveSshData()">Submit</button>

@@ -3,7 +3,9 @@ const { execSync } = require('child_process');
 const sshClient = require('ssh2').Client;
 const scpClient = require('scp2').Client;
 const fs = require('fs');
-
+const http = require('http');
+const querystring = require('querystring');
+const url = require('url');
 
 function createWindow () {
     const mainWindow = new BrowserWindow({
@@ -24,62 +26,53 @@ app.whenReady().then(() => {
   })
 
 ipcMain.on('sshData', (event, sshData) => {
-    let username = sshData.username;
-    let sshKeyFilePath = sshData.sshKeyFilePath;
-    let passphrase = sshData.passphrase;
-
-    startServer(username, sshKeyFilePath, passphrase);
+    startServer(sshData.username, sshData.sshKeyFilePath, sshData.passphrase);
   });
 
 function startServer(username, sshKeyFilePath, passphrase) {
-    var http = require('http');
-    const querystring = require('querystring');
-    const url = require('url');
-
     var server = http.createServer(function (request, response) {   //create web server
         let requestBody = '';
-        let formData = null;
+        let urlencodedFormData = null;
 
         request.on('data', (data) => {
             requestBody += data;
         });
         
         request.on('end', () => {
-            formData = querystring.parse(requestBody);
+            urlencodedFormData = querystring.parse(requestBody);
 
             if (request.method === "POST") {
-                if (Object.keys(formData).length === 0) {
+                if (Object.keys(urlencodedFormData).length === 0) {
                     answerWithBadRequest(response, 'The POST request body parameters are empty, request cannot be processed.');
                 }
                 else {
                     if (request.url == "/sshConnectAndExecute") {
-                        const sshConfig = getSshConfiguration(sshKeyFilePath, passphrase, username, formData.host);
-                        sshConnectAndExecute(sshConfig, formData.command, response);
+                        const sshConfig = getSshConfiguration(sshKeyFilePath, passphrase, username, urlencodedFormData.host);
+                        sshConnectAndExecute(sshConfig, urlencodedFormData.command, response);
                     }
                     else if (request.url == "/secureCopyToRemote") {
-                        const scpConfig = getSshConfiguration(sshKeyFilePath, passphrase, username, formData.host);
-                        let sourcePath = `downloads/${formData.filename}`
-                        let destinationPath = formData.destinationPath;
+                        const scpConfig = getSshConfiguration(sshKeyFilePath, passphrase, username, urlencodedFormData.host);
+                        let sourcePath = `downloads/${urlencodedFormData.filename}`
+                        let destinationPath = urlencodedFormData.destinationPath;
         
                         secureUpload(scpConfig, sourcePath, destinationPath, response);
                     }
                     else if (request.url == "/secureCopyFromRemote") {
-                        const scpConfig = getSshConfiguration(sshKeyFilePath, passphrase, username, formData.host);
-                        
-                        let sourcePath = `${formData.sourcePath}/${formData.filename}`;
-                        let destinationPath = `downloads/${formData.filename}`
+                        const scpConfig = getSshConfiguration(sshKeyFilePath, passphrase, username, urlencodedFormData.host);
+                        let sourcePath = `${urlencodedFormData.sourcePath}/${urlencodedFormData.filename}`;
+                        let destinationPath = `downloads/${urlencodedFormData.filename}`
         
                         secureDownload(scpConfig, sourcePath, destinationPath, response);
                     }
                     else if (request.url == "/saveAsFile") {
-                        fs.writeFile(`downloads/${formData.filename}`, formData.content, function (err) {
+                        fs.writeFile(`downloads/${urlencodedFormData.filename}`, urlencodedFormData.content, function (err) {
                             if (err) throw err;
                             console.log('File is created successfully.');
-                            sendOkResponse(response, `The file '${formData.filename}' was created successfully.`)
+                            sendOkResponse(response, `The file '${urlencodedFormData.filename}' was created successfully.`)
                           });
                     }
                     else if (request.url == "/executeCommand") {
-                        executeCommand(formData.command, formData.input, response);
+                        executeCommand(urlencodedFormData.command, urlencodedFormData.input, response);
                     }
                     else {
                         answerWithBadRequest('Invalid POST request type');
@@ -87,7 +80,10 @@ function startServer(username, sshKeyFilePath, passphrase) {
                 }
             }
             else if (request.method === "GET" && request.url == "/username") {
-                sendOkResponse(response, username)
+                sendOkResponse(response, username);
+            }
+            else if (request.method === "GET" && request.url == "/vpnIp") {
+                sendOkResponse(response, getVpnIp());
             }
             else if (request.method === "GET") {
                 const parsedUrl = url.parse(request.url, true);
@@ -134,6 +130,20 @@ function sendKoResponse(response, message) {
 function answerWithBadRequest(response, message) {
     response.writeHead(400, { 'Content-Type': 'text/plain' });
     response.end(message);
+}
+
+function getVpnIp() {
+    const os = require('os');
+    const interfaces = os.networkInterfaces();
+    
+    for (const networkInterfaceName of Object.keys(interfaces)) {
+        if (networkInterfaceName.includes("OpenVPN")) {
+            return interfaces[networkInterfaceName][0].address;
+        }
+        else {
+            throw new Error('No VPN network interface was found.');
+        }
+    }
 }
 
 function executeCommand(/*String*/ command, /*String*/ input, response) {
